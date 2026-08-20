@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-mist text-ink font-body antialiased;
+}
+
+::selection {
+  @apply bg-sky/20;
+}
+
+/* Focus visibility (keyboard) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #2F6FE4;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Signature: torn / perforated receipt edge, used on POS + invoice summary panels */
+.receipt-edge {
+  position: relative;
+}
+.receipt-edge::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 10px;
+  background-image: radial-gradient(circle at 8px 0, transparent 6px, #EEF5FC 6.5px);
+  background-size: 16px 12px;
+  background-repeat: repeat-x;
+}
+
+.dashed-divider {
+  background-image: repeating-linear-gradient(90deg, #C9D8E8 0, #C9D8E8 6px, transparent 6px, transparent 12px);
+  height: 1px;
+}
+
+.barcode-strip {
+  background-image: repeating-linear-gradient(90deg, currentColor 0px, currentColor 1.5px, transparent 1.5px, transparent 4px, currentColor 4px, currentColor 4.5px, transparent 4.5px, transparent 8px);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #C9D8E8;
+  border-radius: 999px;
+}
