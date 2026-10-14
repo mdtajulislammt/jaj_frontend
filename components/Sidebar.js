@@ -88,7 +88,7 @@ export default function Sidebar() {
         {NAV.map((group) => (
           <div key={group.section} className="mb-4">
             {!collapsed && (
-              <p className="px-2.5 mb-1.5 text-[10px] font-semibold tracking-widest text-white/35 uppercase">
+              <p className="px-2.5 mb-1.5 text-[10px] font-semibold tracking-widest text-primary-light/70 uppercase">
                 {group.section}
               </p>
             )}
@@ -100,14 +100,18 @@ export default function Sidebar() {
                     key={href}
                     href={href}
                     className={clsx(
-                      "flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13.5px] font-medium transition-colors",
+                      "flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13.5px] font-medium transition-colors group",
                       active
-                        ? "bg-sky text-white shadow-pop"
-                        : "text-white/65 hover:bg-white/[0.06] hover:text-white"
+                        ? "bg-primary text-white shadow-pop font-semibold"
+                        : "text-white/75 hover:bg-primary/15 hover:text-white"
                     )}
                     title={collapsed ? label : undefined}
                   >
-                    <Icon size={17} strokeWidth={2} className="shrink-0" />
+                    <Icon
+                      size={17}
+                      strokeWidth={2}
+                      className={clsx("shrink-0 transition-colors", active ? "text-white" : "text-primary-light/85 group-hover:text-primary-light")}
+                    />
                     {!collapsed && <span className="truncate">{label}</span>}
                   </Link>
                 );
@@ -120,13 +124,13 @@ export default function Sidebar() {
       <div className="p-2.5 border-t border-white/10">
         <button
           onClick={() => dispatch(toggleSidebar())}
-          className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-white/55 hover:bg-white/[0.06] hover:text-white transition-colors"
+          className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-white/55 hover:bg-primary/15 hover:text-white transition-colors"
         >
           {collapsed ? <ChevronsRight size={17} /> : <ChevronsLeft size={17} />}
           {!collapsed && <span>Collapse</span>}
         </button>
         {!collapsed && (
-          <div className="mt-2 h-3 text-sky-light/70 barcode-strip" aria-hidden="true" />
+          <div className="mt-2 h-3 text-primary-light/75 barcode-strip" aria-hidden="true" />
         )}
       </div>
     </aside>

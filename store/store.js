@@ -34,10 +34,10 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key: "electro-pos-root",
-  version: 1,
+  key: "electro-pos-root-v2",
+  version: 2,
   storage,
-  // everything persists so a page refresh keeps the demo data intact
+  // fresh v2 key loads all 20 demo products with images
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

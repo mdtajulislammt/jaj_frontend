@@ -162,15 +162,15 @@ export default function PurchaseOrdersPage() {
       <style jsx global>{`
         .pof-input {
           width: 100%;
-          background: #eef5fc;
-          border: 1px solid #dce6f0;
+          background: var(--bg-mist, #f4f8f1);
+          border: 1px solid var(--border-line, #dde8d6);
           border-radius: 8px;
           padding: 8px 10px;
           font-size: 13px;
           color: #0a0e16;
         }
         .pof-input:focus-visible {
-          outline: 2px solid #2f6fe4;
+          outline: 2px solid var(--primary);
         }
       `}</style>
     </div>

@@ -85,7 +85,13 @@ export default function InventoryPage() {
               <tr key={product.id} className="border-t border-line hover:bg-mist/60 transition-colors">
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-mist flex items-center justify-center text-base">{product.image}</div>
+                    <div className="w-8 h-8 rounded-lg bg-mist flex items-center justify-center overflow-hidden shrink-0 border border-line">
+                      {typeof product.image === "string" && (product.image.startsWith("http") || product.image.startsWith("/")) ? (
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                      ) : (
+                        <span className="text-base">{product.image || "📦"}</span>
+                      )}
+                    </div>
                     <div>
                       <p className="font-medium text-ink">{product.name}</p>
                       <p className="text-[11.5px] text-slate">{product.variant}</p>

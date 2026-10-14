@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* ━━ Global Brand Theme Color ━━━━━━━━━━━━━━━━━━━━━━━━━
+     Change --primary to any hex code to recolor the entire app! */
+  --primary: #64BD0B;
+  --primary-hover: #529E08;
+  --primary-dark: #3B7506;
+  --primary-light: #84DB1B;
+  --primary-dim: #EBF8DC;
+  --primary-dim-subtle: #F6FCF1;
+  --primary-text: #FFFFFF;
+  --primary-border: #4E9409;
+  --primary-shadow: rgba(100, 189, 11, 0.38);
+
+  --bg-mist: #F4F8F1;
+  --bg-mist-deep: #E8F2E2;
+  --border-line: #DDE8D6;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -11,7 +29,8 @@ body {
 }
 
 ::selection {
-  @apply bg-sky/20;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 /* Focus visibility (keyboard) */
@@ -20,7 +39,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #2F6FE4;
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -44,13 +63,13 @@ select:focus-visible,
   right: 0;
   top: -1px;
   height: 10px;
-  background-image: radial-gradient(circle at 8px 0, transparent 6px, #EEF5FC 6.5px);
+  background-image: radial-gradient(circle at 8px 0, transparent 6px, #F4F8F1 6.5px);
   background-size: 16px 12px;
   background-repeat: repeat-x;
 }
 
 .dashed-divider {
-  background-image: repeating-linear-gradient(90deg, #C9D8E8 0, #C9D8E8 6px, transparent 6px, transparent 12px);
+  background-image: repeating-linear-gradient(90deg, #D4E2CA 0, #D4E2CA 6px, transparent 6px, transparent 12px);
   height: 1px;
 }
 
@@ -63,6 +82,6 @@ select:focus-visible,
   height: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: #C9D8E8;
+  background-color: #D4E2CA;
   border-radius: 999px;
 }

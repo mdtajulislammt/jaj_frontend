@@ -3,7 +3,7 @@ export default function PageHeader({ eyebrow, title, description, action }) {
     <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
       <div>
         {eyebrow && (
-          <p className="text-[11px] font-semibold tracking-widest text-sky uppercase mb-1">
+          <p className="text-[11px] font-bold tracking-widest text-primary-dark uppercase mb-1">
             {eyebrow}
           </p>
         )}

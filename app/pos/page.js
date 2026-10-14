@@ -30,8 +30,16 @@ import {
 } from "@/store/slices/cartSlice";
 import { createInvoice } from "@/store/slices/salesSlice";
 import { adjustDue } from "@/store/slices/customersSlice";
+import { resetToDemo } from "@/store/slices/productsSlice";
 
-/* ─── Style tokens ──────────────────────────────── */
+/* ─── Style tokens (Dynamic CSS variables) ───────── */
+const P_COLOR = "var(--primary, #64BD0B)";
+const P_HOVER = "var(--primary-hover, #529E08)";
+const P_DARK = "var(--primary-dark, #3B7506)";
+const P_LIGHT = "var(--primary-light, #84DB1B)";
+const P_DIM = "var(--primary-dim, #EBF8DC)";
+const P_DIM_SUBTLE = "var(--primary-dim-subtle, #F6FCF1)";
+
 const TH = {
   padding: "7px 8px",
   textAlign: "center",
@@ -40,7 +48,7 @@ const TH = {
   color: "#1a2e44",
   whiteSpace: "nowrap",
   borderRight: "1px solid #c8d8e8",
-  background: "#ddeaf6",
+  background: P_DIM,
   userSelect: "none",
 };
 const TD = {
@@ -63,7 +71,7 @@ const CELL_IN = {
   color: "#1a2e44",
 };
 const QTY_BTN = {
-  background: "#e0ecf8",
+  background: P_DIM,
   border: "1px solid #b8cce0",
   borderRadius: 3,
   width: 22,
@@ -254,6 +262,13 @@ export default function PosPage() {
   const [viewMode, setViewMode] = useState("cards"); // "cards" | "table"
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  // Auto-sync 20 demo products if browser rehydrated an old cache
+  useEffect(() => {
+    if (products.length < 20 || products.some((p) => !p.image || !p.image.startsWith("http"))) {
+      dispatch(resetToDemo());
+    }
+  }, [products, dispatch]);
+
   /* ── All products filtered for Card Grid ── */
   const displayProducts = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -293,7 +308,7 @@ export default function PosPage() {
   /* ── Per-line calc ── */
   const lineCalcs = cart.lines.map((l) => {
     const prod = products.find((p) => p.id === l.productId);
-    const image = l.image || prod?.image || "💊";
+    const image = l.image || prod?.image || "";
     const variant = l.variant || prod?.variant || "";
     const disc = l.price * ((l.discountPct || 0) / 100);
     const net = l.price - disc;
@@ -330,7 +345,7 @@ export default function PosPage() {
           key: `${p.id}-${Date.now()}`,
           productId: p.id,
           name: p.name,
-          image: p.image || "💊",
+          image: p.image || "",
           variant: p.variant || "",
           group: p.brand || "—",
           stock: inStock,
@@ -471,13 +486,14 @@ export default function PosPage() {
       {/* ━━ TOP BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div
         style={{
-          background: "#fff",
-          borderBottom: "2px solid #c8d8e8",
-          padding: "6px 12px",
+          background: P_COLOR,
+          borderBottom: "2px solid " + P_DARK,
+          padding: "7px 14px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           flexShrink: 0,
+          boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
         }}
       >
         {/* ── LEFT: Logo ── */}
@@ -485,38 +501,38 @@ export default function PosPage() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 10,
             flexShrink: 0,
           }}
         >
           <div
             style={{
-              width: 50,
-              height: 50,
+              width: 44,
+              height: 44,
               borderRadius: "50%",
-              background: "linear-gradient(135deg,#0d9e72,#0b7a58)",
+              background: "#ffffff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 2px 8px rgba(13,158,114,0.32)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
             }}
           >
-            <span style={{ fontSize: 26 }}>⚕</span>
+            <span style={{ fontSize: 24, color: P_DARK, fontWeight: 800 }}>⚕</span>
           </div>
           <div>
             <div
               style={{
                 fontSize: 22,
                 fontWeight: 800,
-                color: "#0a3050",
+                color: "#ffffff",
                 letterSpacing: 1,
-                lineHeight: 1.2,
+                lineHeight: 1.15,
                 whiteSpace: "nowrap",
               }}
             >
               POS
             </div>
-            <div style={{ fontSize: 13, color: "#7a93aa", letterSpacing: 0.4 }}>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.9)", letterSpacing: 0.4, fontWeight: 500 }}>
               management system
             </div>
           </div>
@@ -605,7 +621,7 @@ export default function PosPage() {
                         style={{
                           padding: "8px 12px",
                           cursor: "pointer",
-                          background: isSelected ? "#e8f0fe" : "transparent",
+                          background: isSelected ? "#ebf8dc" : "transparent",
                           borderBottom: "1px solid #f0f5fa",
                           display: "flex",
                           justifyContent: "space-between",
@@ -615,11 +631,11 @@ export default function PosPage() {
                         }}
                         onMouseEnter={(e) => {
                           if (!isSelected)
-                            e.currentTarget.style.background = "#f4f8ff";
+                            e.currentTarget.style.background = "#f4f9ef";
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.background = isSelected
-                            ? "#e8f0fe"
+                            ? "#ebf8dc"
                             : "transparent";
                         }}
                       >
@@ -691,16 +707,17 @@ export default function PosPage() {
           <button
             id="pos-add-btn"
             style={{
-              background: "#3a7bd5",
-              color: "#fff",
+              background: "#ffffff",
+              color: P_DARK,
               border: "none",
-              borderRadius: 5,
+              borderRadius: 6,
               padding: "8px 18px",
               fontSize: 14,
               fontWeight: 700,
               cursor: "pointer",
               flexShrink: 0,
               whiteSpace: "nowrap",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
             }}
           >
             Add +
@@ -835,24 +852,50 @@ export default function PosPage() {
                           e.currentTarget.style.background = "transparent";
                         }}
                       >
-                        <div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                           <div
                             style={{
-                              fontSize: 13,
-                              fontWeight: 600,
-                              color: "#1a2e44",
+                              width: 32,
+                              height: 32,
+                              borderRadius: 6,
+                              background: "#f1f5f9",
+                              border: "1px solid #e2e8f0",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              overflow: "hidden",
+                              flexShrink: 0,
                             }}
                           >
-                            {p.image} {p.name}
+                            {typeof p.image === "string" && (p.image.startsWith("http") || p.image.startsWith("/")) ? (
+                              <img
+                                src={p.image}
+                                alt={p.name}
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                              />
+                            ) : (
+                              <span style={{ fontSize: 16 }}>{p.image || "📦"}</span>
+                            )}
                           </div>
-                          <div
-                            style={{
-                              fontSize: 11,
-                              color: "#7a93aa",
-                              marginTop: 1,
-                            }}
-                          >
-                            {p.variant} · {p.sku}
+                          <div>
+                            <div
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 600,
+                                color: "#1a2e44",
+                              }}
+                            >
+                              {p.name}
+                            </div>
+                            <div
+                              style={{
+                                fontSize: 11,
+                                color: "#7a93aa",
+                                marginTop: 1,
+                              }}
+                            >
+                              {p.variant} · {p.sku}
+                            </div>
                           </div>
                         </div>
                         <div
@@ -926,7 +969,7 @@ export default function PosPage() {
                 type="checkbox"
                 checked={showZero}
                 onChange={(e) => setShowZero(e.target.checked)}
-                style={{ cursor: "pointer", accentColor: "#3a7bd5" }}
+                style={{ cursor: "pointer", accentColor: P_COLOR }}
               />
               0 Stock
             </label>
@@ -935,7 +978,7 @@ export default function PosPage() {
             <div
               style={{
                 display: "flex",
-                background: "#e8eff7",
+                background: P_DIM,
                 borderRadius: 5,
                 padding: 2,
                 gap: 2,
@@ -955,7 +998,7 @@ export default function PosPage() {
                   borderRadius: 4,
                   cursor: "pointer",
                   background: viewMode === "cards" ? "#fff" : "transparent",
-                  color: viewMode === "cards" ? "#1e4a8c" : "#56606e",
+                  color: viewMode === "cards" ? P_DARK : "#56606e",
                   boxShadow:
                     viewMode === "cards" ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
                 }}
@@ -975,7 +1018,7 @@ export default function PosPage() {
                   borderRadius: 4,
                   cursor: "pointer",
                   background: viewMode === "table" ? "#fff" : "transparent",
-                  color: viewMode === "table" ? "#1e4a8c" : "#56606e",
+                  color: viewMode === "table" ? P_DARK : "#56606e",
                   boxShadow:
                     viewMode === "table" ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
                 }}
@@ -1008,7 +1051,7 @@ export default function PosPage() {
                   fontSize: 12,
                   fontWeight: selectedCategory === "all" ? 700 : 500,
                   background:
-                    selectedCategory === "all" ? "#1e4a8c" : "#edf2f7",
+                    selectedCategory === "all" ? P_COLOR : "#edf2f7",
                   color: selectedCategory === "all" ? "#fff" : "#4a5568",
                   cursor: "pointer",
                   whiteSpace: "nowrap",
@@ -1032,7 +1075,7 @@ export default function PosPage() {
                       padding: "4px 12px",
                       fontSize: 12,
                       fontWeight: isSelected ? 700 : 500,
-                      background: isSelected ? "#1e4a8c" : "#edf2f7",
+                      background: isSelected ? P_COLOR : "#edf2f7",
                       color: isSelected ? "#fff" : "#4a5568",
                       cursor: "pointer",
                       whiteSpace: "nowrap",
@@ -1101,230 +1144,290 @@ export default function PosPage() {
                         key={p.id}
                         onClick={() => !disabled && addProduct(p)}
                         style={{
-                          background: inCartQty > 0 ? "#f8fbff" : "#fff",
-                          border:
-                            inCartQty > 0
-                              ? "1.5px solid #3a7bd5"
-                              : "1px solid #dbe5f0",
+                          background: inCartQty > 0 ? "var(--primary-dark, #4e9508)" : P_COLOR,
+                          border: "none",
                           borderRadius: 8,
-                          padding: 10,
+                          overflow: "hidden",
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "space-between",
                           cursor: disabled ? "not-allowed" : "pointer",
-                          opacity: disabled ? 0.5 : 1,
+                          opacity: disabled ? 0.55 : 1,
                           boxShadow:
                             inCartQty > 0
-                              ? "0 2px 8px rgba(58,123,213,0.15)"
-                              : "0 1px 3px rgba(0,0,0,0.04)",
-                          transition: "all 0.15s ease",
+                              ? "0 6px 18px rgba(45, 99, 3, 0.45)"
+                              : "0 3px 10px rgba(100, 189, 11, 0.28)",
+                          transition: "all 0.18s ease",
                           position: "relative",
+                          color: "#ffffff",
                         }}
                         onMouseEnter={(e) => {
                           if (!disabled && inCartQty === 0) {
-                            e.currentTarget.style.borderColor = "#9fc2ea";
-                            e.currentTarget.style.transform =
-                              "translateY(-2px)";
+                            e.currentTarget.style.transform = "translateY(-3px)";
                             e.currentTarget.style.boxShadow =
-                              "0 4px 12px rgba(0,0,0,0.08)";
+                              "0 8px 22px rgba(100, 189, 11, 0.42)";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!disabled && inCartQty === 0) {
-                            e.currentTarget.style.borderColor = "#dbe5f0";
                             e.currentTarget.style.transform = "none";
                             e.currentTarget.style.boxShadow =
-                              "0 1px 3px rgba(0,0,0,0.04)";
+                              "0 3px 10px rgba(100, 189, 11, 0.28)";
                           }
                         }}
                       >
-                        {/* Top: Category/Brand + Stock Badge */}
+                        {/* Top: Image Full Width & Height */}
                         <div
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginBottom: 8,
-                            gap: 4,
+                            width: "100%",
+                            height: 135,
+                            background: "rgba(0,0,0,0.08)",
+                            position: "relative",
+                            overflow: "hidden",
+                            flexShrink: 0,
                           }}
                         >
-                          <span
-                            style={{
-                              fontSize: 10,
-                              fontWeight: 700,
-                              background: "#eaf1f9",
-                              color: "#3a6080",
-                              borderRadius: 4,
-                              padding: "2px 6px",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              maxWidth: 90,
-                            }}
-                          >
-                            {p.brand || "General"}
-                          </span>
-                          <span
-                            style={{
-                              fontSize: 10,
-                              fontWeight: 700,
-                              color: inStock > 0 ? "#0d9e72" : "#c0392b",
-                              background: inStock > 0 ? "#e6f8f1" : "#fdecea",
-                              borderRadius: 4,
-                              padding: "2px 6px",
-                              whiteSpace: "nowrap",
-                            }}
-                          >
-                            {inStock > 0 ? `${inStock} in stock` : "0 stock"}
-                          </span>
-                        </div>
-
-                        {/* Middle: Icon + Name + Variant */}
-                        <div
-                          style={{ textAlign: "center", padding: "4px 0 8px" }}
-                        >
-                          <div style={{ fontSize: 32, marginBottom: 4 }}>
-                            {p.image || "💊"}
-                          </div>
-                          <div
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 700,
-                              color: "#0a3050",
-                              lineHeight: 1.3,
-                              minHeight: 34,
-                              display: "-webkit-box",
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: "vertical",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {p.name}
-                          </div>
-                          <div
-                            style={{
-                              fontSize: 11,
-                              color: "#7a93aa",
-                              marginTop: 2,
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {p.variant || p.sku}
-                          </div>
-                        </div>
-
-                        {/* Bottom: Price + Action */}
-                        <div
-                          style={{
-                            borderTop: "1px solid #eef4fa",
-                            paddingTop: 8,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 4,
-                          }}
-                        >
-                          <div>
-                            <div
+                          {typeof p.image === "string" && (p.image.startsWith("http") || p.image.startsWith("/")) ? (
+                            <img
+                              src={p.image}
+                              alt={p.name}
                               style={{
-                                fontSize: 9,
-                                color: "#7a93aa",
-                                textTransform: "uppercase",
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                display: "block",
                               }}
-                            >
-                              Price
-                            </div>
-                            <div
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                                if (e.currentTarget.nextSibling) {
+                                  e.currentTarget.nextSibling.style.display = "flex";
+                                }
+                              }}
+                            />
+                          ) : null}
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              display:
+                                typeof p.image === "string" &&
+                                (p.image.startsWith("http") || p.image.startsWith("/"))
+                                  ? "none"
+                                  : "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 38,
+                            }}
+                          >
+                            {p.image || "📦"}
+                          </div>
+                        </div>
+
+                        {/* Bottom: Category, Stock, Name, Detail, Price & Add Button */}
+                        <div
+                          style={{
+                            padding: 10,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            flex: 1,
+                          }}
+                        >
+                          {/* Category + Stock */}
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginBottom: 6,
+                              gap: 4,
+                            }}
+                          >
+                            <span
                               style={{
-                                fontSize: 14,
+                                fontSize: 10.5,
                                 fontWeight: 800,
-                                color: "#1e4a8c",
+                                background: "rgba(255, 255, 255, 0.95)",
+                                color: "var(--primary-dark, #3b7405)",
+                                borderRadius: 4,
+                                padding: "2px 7px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                maxWidth: 95,
                               }}
                             >
-                              ৳{p.sellPrice.toLocaleString()}
+                              {p.brand || "General"}
+                            </span>
+                            <span
+                              style={{
+                                fontSize: 10,
+                                fontWeight: 800,
+                                color: inStock > 0 ? "var(--primary-dark, #3b7405)" : "#b91c1c",
+                                background: inStock > 0 ? "rgba(255, 255, 255, 0.95)" : "#fee2e2",
+                                borderRadius: 4,
+                                padding: "2px 7px",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {inStock > 0 ? `${inStock} in stock` : "0 stock"}
+                            </span>
+                          </div>
+
+                          {/* Name + Detail */}
+                          <div style={{ marginBottom: 6 }}>
+                            <div
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 750,
+                                color: "#ffffff",
+                                lineHeight: 1.3,
+                                minHeight: 34,
+                                display: "-webkit-box",
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                textShadow: "0 1px 2px rgba(0,0,0,0.2)",
+                              }}
+                              title={p.name}
+                            >
+                              {p.name}
+                            </div>
+                            <div
+                              style={{
+                                fontSize: 11,
+                                color: "rgba(255, 255, 255, 0.9)",
+                                marginTop: 2,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {p.variant || p.sku}
                             </div>
                           </div>
 
-                          {/* Add / Qty Control */}
-                          {inCartQty > 0 ? (
-                            <div
-                              onClick={(e) => e.stopPropagation()}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 3,
-                                background: "#1e4a8c",
-                                borderRadius: 5,
-                                padding: "2px 4px",
-                              }}
-                            >
-                              <button
-                                onClick={() => handleCardDecrement(p.id)}
+                          {/* Price + Action */}
+                          <div
+                            style={{
+                              borderTop: "1px solid rgba(255, 255, 255, 0.3)",
+                              paddingTop: 8,
+                              marginTop: "auto",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              gap: 4,
+                            }}
+                          >
+                            <div>
+                              <div
                                 style={{
-                                  background: "transparent",
-                                  border: "none",
-                                  color: "#fff",
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  padding: "2px 4px",
+                                  fontSize: 9,
+                                  color: "rgba(255, 255, 255, 0.85)",
+                                  textTransform: "uppercase",
+                                  letterSpacing: "0.5px",
+                                  fontWeight: 700,
                                 }}
                               >
-                                <Minus size={12} />
-                              </button>
-                              <span
+                                Price
+                              </div>
+                              <div
                                 style={{
+                                  fontSize: 15,
+                                  fontWeight: 900,
+                                  color: "#ffffff",
+                                  textShadow: "0 1px 2px rgba(0,0,0,0.2)",
+                                }}
+                              >
+                                ৳{p.sellPrice.toLocaleString()}
+                              </div>
+                            </div>
+
+                            {/* Add / Qty Control */}
+                            {inCartQty > 0 ? (
+                              <div
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 2,
+                                  background: "#ffffff",
+                                  borderRadius: 6,
+                                  padding: "2px 5px",
+                                  boxShadow: "0 2px 6px rgba(0,0,0,0.18)",
+                                }}
+                              >
+                                <button
+                                  onClick={() => handleCardDecrement(p.id)}
+                                  style={{
+                                    background: "transparent",
+                                    border: "none",
+                                    color: "var(--primary-dark, #3b7405)",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    padding: "2px 4px",
+                                    fontWeight: 900,
+                                  }}
+                                >
+                                  <Minus size={13} strokeWidth={3} />
+                                </button>
+                                <span
+                                  style={{
+                                    fontSize: 12,
+                                    fontWeight: 900,
+                                    color: "var(--primary-dark, #3b7405)",
+                                    padding: "0 4px",
+                                    minWidth: 16,
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {inCartQty}
+                                </span>
+                                <button
+                                  onClick={() => addProduct(p)}
+                                  style={{
+                                    background: "transparent",
+                                    border: "none",
+                                    color: "var(--primary-dark, #3b7405)",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    padding: "2px 4px",
+                                    fontWeight: 900,
+                                  }}
+                                >
+                                  <Plus size={13} strokeWidth={3} />
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (!disabled) addProduct(p);
+                                }}
+                                disabled={disabled}
+                                style={{
+                                  background: disabled ? "rgba(255,255,255,0.4)" : "#ffffff",
+                                  color: disabled ? "rgba(255,255,255,0.85)" : "var(--primary-dark, #3b7405)",
+                                  border: "none",
+                                  borderRadius: 6,
+                                  padding: "5px 12px",
                                   fontSize: 12,
                                   fontWeight: 800,
-                                  color: "#fff",
-                                  padding: "0 4px",
-                                }}
-                              >
-                                {inCartQty}
-                              </span>
-                              <button
-                                onClick={() => addProduct(p)}
-                                style={{
-                                  background: "transparent",
-                                  border: "none",
-                                  color: "#fff",
-                                  cursor: "pointer",
+                                  cursor: disabled ? "not-allowed" : "pointer",
                                   display: "flex",
                                   alignItems: "center",
-                                  justifyContent: "center",
-                                  padding: "2px 4px",
+                                  gap: 4,
+                                  boxShadow: disabled ? "none" : "0 2px 6px rgba(0,0,0,0.18)",
                                 }}
                               >
-                                <Plus size={12} />
+                                <Plus size={13} strokeWidth={3} /> Add
                               </button>
-                            </div>
-                          ) : (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (!disabled) addProduct(p);
-                              }}
-                              disabled={disabled}
-                              style={{
-                                background: disabled ? "#c0ccd8" : "#3a7bd5",
-                                color: "#fff",
-                                border: "none",
-                                borderRadius: 5,
-                                padding: "5px 10px",
-                                fontSize: 12,
-                                fontWeight: 700,
-                                cursor: disabled ? "not-allowed" : "pointer",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 3,
-                              }}
-                            >
-                              <Plus size={13} /> Add
-                            </button>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     );
@@ -1374,7 +1477,7 @@ export default function PosPage() {
                           onClick={() => setViewMode("cards")}
                           style={{
                             marginTop: 10,
-                            background: "#3a7bd5",
+                            background: P_COLOR,
                             color: "#fff",
                             border: "none",
                             borderRadius: 4,
@@ -1447,7 +1550,7 @@ export default function PosPage() {
                             }
                             style={{
                               cursor: "pointer",
-                              accentColor: "#3a7bd5",
+                              accentColor: P_COLOR,
                             }}
                           />
                         </td>
@@ -1618,19 +1721,20 @@ export default function PosPage() {
           style={{
             width: 340,
             flexShrink: 0,
-            background: "#fff",
+            background: P_COLOR,
             display: "flex",
             flexDirection: "column",
             overflowY: "auto",
-            borderLeft: "1px solid #c8d8e8",
+            borderLeft: "1px solid " + P_DARK,
+            color: "#ffffff",
           }}
         >
           {/* Cart Items Header */}
           <div
             style={{
               padding: "10px 14px 8px",
-              borderBottom: "1px solid #c8d8e8",
-              background: "#f0f5fa",
+              borderBottom: "1px solid rgba(255,255,255,0.2)",
+              background: "rgba(0,0,0,0.12)",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -1640,13 +1744,13 @@ export default function PosPage() {
               style={{
                 fontSize: 14,
                 fontWeight: 800,
-                color: "#0a3050",
+                color: "#ffffff",
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
               }}
             >
-              <ShoppingCart size={15} color="#1e4a8c" />
+              <ShoppingCart size={15} color="#ffffff" />
               <span>Cart Items ({lineCalcs.length})</span>
             </div>
             {lineCalcs.length > 0 && (
@@ -1654,15 +1758,15 @@ export default function PosPage() {
                 onClick={() => dispatch(clearCart())}
                 style={{
                   border: "none",
-                  background: "transparent",
-                  color: "#c0392b",
+                  background: "rgba(255,255,255,0.2)",
+                  color: "#ffffff",
                   fontSize: 11,
                   fontWeight: 600,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   gap: 3,
-                  padding: "2px 6px",
+                  padding: "3px 8px",
                   borderRadius: 4,
                 }}
                 title="Clear all cart items"
@@ -1679,8 +1783,8 @@ export default function PosPage() {
               maxHeight: 280,
               overflowY: "auto",
               padding: "6px 10px",
-              background: "#fcfdfe",
-              borderBottom: "1px solid #c8d8e8",
+              background: "rgba(0,0,0,0.06)",
+              borderBottom: "1px solid rgba(255,255,255,0.2)",
             }}
           >
             {lineCalcs.length === 0 ? (
@@ -1688,17 +1792,17 @@ export default function PosPage() {
                 style={{
                   textAlign: "center",
                   padding: "36px 10px",
-                  color: "#94a3b8",
+                  color: "rgba(255,255,255,0.85)",
                 }}
               >
                 <Package
                   size={28}
-                  style={{ margin: "0 auto 6px", opacity: 0.4 }}
+                  style={{ margin: "0 auto 6px", opacity: 0.9, color: "#ffffff" }}
                 />
-                <div style={{ fontSize: 12, fontWeight: 600 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
                   No items in cart
                 </div>
-                <div style={{ fontSize: 10, marginTop: 2 }}>
+                <div style={{ fontSize: 11, marginTop: 2, color: "rgba(255,255,255,0.8)" }}>
                   Click on any product card to add
                 </div>
               </div>
@@ -1718,21 +1822,39 @@ export default function PosPage() {
                       boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
                     }}
                   >
-                    {/* Item Image / Emoji */}
+                    {/* Item Image */}
                     <div
                       style={{
-                        width: 32,
-                        height: 32,
+                        width: 34,
+                        height: 34,
                         borderRadius: 6,
-                        background: "#f0f5fa",
+                        background: "#fff",
+                        border: "1px solid #d9e2ec",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: 16,
                         flexShrink: 0,
+                        overflow: "hidden",
+                        padding: 2,
                       }}
                     >
-                      {l.image || "💊"}
+                      {typeof l.image === "string" && (l.image.startsWith("http") || l.image.startsWith("/")) ? (
+                        <img
+                          src={l.image}
+                          alt={l.name}
+                          style={{
+                            maxHeight: "100%",
+                            maxWidth: "100%",
+                            objectFit: "contain",
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
+                      ) : (
+                        <span>{l.image || "📦"}</span>
+                      )}
                     </div>
 
                     {/* Title + Unit Price */}
@@ -1780,7 +1902,7 @@ export default function PosPage() {
                         style={{
                           border: "none",
                           background: "#fff",
-                          color: "#1e4a8c",
+                          color: "#4E9409",
                           width: 20,
                           height: 20,
                           borderRadius: 3,
@@ -1810,7 +1932,7 @@ export default function PosPage() {
                         }
                         style={{
                           border: "none",
-                          background: "#1e4a8c",
+                          background: "#64BD0B",
                           color: "#fff",
                           width: 20,
                           height: 20,
@@ -1830,7 +1952,7 @@ export default function PosPage() {
                       style={{
                         fontSize: 12,
                         fontWeight: 800,
-                        color: "#1e4a8c",
+                        color: "#4E9409",
                         minWidth: 52,
                         textAlign: "right",
                         flexShrink: 0,
@@ -1871,26 +1993,30 @@ export default function PosPage() {
           </div>
 
           {/* ── Summary & Payment (Compact) ── */}
-          <div style={{ padding: "10px 14px 12px", background: "#fff" }}>
+          <div
+            style={{
+              padding: "10px 14px 12px",
+              background: "rgba(0,0,0,0.12)",
+              borderTop: "1px solid rgba(255,255,255,0.2)",
+            }}
+          >
             {/* Header / Qty count */}
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                background: "#f0f5fa",
-                borderRadius: 4,
-                padding: "5px 10px",
+                background: "rgba(255,255,255,0.15)",
+                borderRadius: 5,
+                padding: "6px 10px",
                 marginBottom: 8,
               }}
             >
-              <span style={{ fontSize: 11, color: "#56606e" }}>
-                Total Qty:{" "}
-                <strong style={{ color: "#0a3050" }}>{totalQty}</strong>
+              <span style={{ fontSize: 11, color: "#ffffff", fontWeight: 600 }}>
+                Total Qty: <strong style={{ color: "#ffffff" }}>{totalQty}</strong>
               </span>
-              <span style={{ fontSize: 11, color: "#56606e" }}>
-                Total Items:{" "}
-                <strong style={{ color: "#0a3050" }}>{totalItems}</strong>
+              <span style={{ fontSize: 11, color: "#ffffff", fontWeight: 600 }}>
+                Total Items: <strong style={{ color: "#ffffff" }}>{totalItems}</strong>
               </span>
             </div>
 
@@ -1904,10 +2030,11 @@ export default function PosPage() {
                     justifyContent: "space-between",
                     fontSize: 12,
                     marginBottom: 5,
+                    color: "rgba(255,255,255,0.95)",
                   }}
                 >
-                  <span style={{ color: "#56606e" }}>{r.label}</span>
-                  <span style={{ color: "#1a2e44", fontWeight: 600 }}>
+                  <span>{r.label}</span>
+                  <span style={{ fontWeight: 700, color: "#ffffff" }}>
                     {r.val}
                   </span>
                 </div>
@@ -1919,21 +2046,21 @@ export default function PosPage() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                borderTop: "1px solid #c8d8e8",
-                borderBottom: "1px solid #c8d8e8",
+                borderTop: "1px solid rgba(255,255,255,0.25)",
+                borderBottom: "1px solid rgba(255,255,255,0.25)",
                 padding: "6px 0",
                 marginBottom: 8,
                 fontSize: 12,
               }}
             >
-              <span style={{ color: "#56606e", fontWeight: 600 }}>
+              <span style={{ color: "#ffffff", fontWeight: 700 }}>
                 Round Total:
               </span>
               <span
                 style={{
-                  fontSize: 16,
+                  fontSize: 17,
                   fontWeight: 800,
-                  color: "#0a3050",
+                  color: "#ffffff",
                 }}
               >
                 ৳{grossRound.toFixed(2)}
@@ -1950,7 +2077,7 @@ export default function PosPage() {
                   alignItems: "center",
                 }}
               >
-                <span style={{ fontSize: 12, color: "#56606e" }}>Cash:</span>
+                <span style={{ fontSize: 12, color: "#ffffff", fontWeight: 600 }}>Cash:</span>
                 <input
                   id="pos-cash"
                   type="number"
@@ -1960,7 +2087,18 @@ export default function PosPage() {
                   onChange={(e) =>
                     setPay({ ...pay, cash: Number(e.target.value) || 0 })
                   }
-                  style={{ ...R_IN, width: 84, padding: "4px 8px" }}
+                  style={{
+                    border: "1px solid rgba(0,0,0,0.15)",
+                    borderRadius: 4,
+                    padding: "4px 8px",
+                    fontSize: 12,
+                    width: 84,
+                    outline: "none",
+                    textAlign: "right",
+                    background: "#ffffff",
+                    color: "#0a0e16",
+                    fontWeight: 700,
+                  }}
                 />
               </div>
 
@@ -1973,14 +2111,23 @@ export default function PosPage() {
                   gap: 4,
                 }}
               >
-                <span style={{ fontSize: 12, color: "#56606e", flexShrink: 0 }}>
+                <span style={{ fontSize: 12, color: "#ffffff", fontWeight: 600, flexShrink: 0 }}>
                   Card:
                 </span>
                 <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
                   <select
                     value={cardType}
                     onChange={(e) => setCardType(e.target.value)}
-                    style={{ ...R_SEL, padding: "4px 6px", fontSize: 11 }}
+                    style={{
+                      border: "1px solid rgba(0,0,0,0.15)",
+                      borderRadius: 4,
+                      padding: "4px 6px",
+                      fontSize: 11,
+                      outline: "none",
+                      background: "#ffffff",
+                      color: "#0a0e16",
+                      fontWeight: 600,
+                    }}
                   >
                     <option value="Visa">Visa</option>
                     <option value="Mastercard">Mastercard</option>
@@ -1995,7 +2142,18 @@ export default function PosPage() {
                     onChange={(e) =>
                       setPay({ ...pay, card: Number(e.target.value) || 0 })
                     }
-                    style={{ ...R_IN, width: 68, padding: "4px 6px" }}
+                    style={{
+                      border: "1px solid rgba(0,0,0,0.15)",
+                      borderRadius: 4,
+                      padding: "4px 6px",
+                      fontSize: 12,
+                      width: 68,
+                      outline: "none",
+                      textAlign: "right",
+                      background: "#ffffff",
+                      color: "#0a0e16",
+                      fontWeight: 700,
+                    }}
                   />
                 </div>
               </div>
@@ -2009,14 +2167,23 @@ export default function PosPage() {
                   gap: 4,
                 }}
               >
-                <span style={{ fontSize: 12, color: "#56606e", flexShrink: 0 }}>
+                <span style={{ fontSize: 12, color: "#ffffff", fontWeight: 600, flexShrink: 0 }}>
                   MFS:
                 </span>
                 <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
                   <select
                     value={mfsType}
                     onChange={(e) => setMfsType(e.target.value)}
-                    style={{ ...R_SEL, padding: "4px 6px", fontSize: 11 }}
+                    style={{
+                      border: "1px solid rgba(0,0,0,0.15)",
+                      borderRadius: 4,
+                      padding: "4px 6px",
+                      fontSize: 11,
+                      outline: "none",
+                      background: "#ffffff",
+                      color: "#0a0e16",
+                      fontWeight: 600,
+                    }}
                   >
                     <option value="Bkash">Bkash</option>
                     <option value="Nagad">Nagad</option>
@@ -2031,11 +2198,23 @@ export default function PosPage() {
                     onChange={(e) =>
                       setPay({ ...pay, mfs: Number(e.target.value) || 0 })
                     }
-                    style={{ ...R_IN, width: 68, padding: "4px 6px" }}
+                    style={{
+                      border: "1px solid rgba(0,0,0,0.15)",
+                      borderRadius: 4,
+                      padding: "4px 6px",
+                      fontSize: 12,
+                      width: 68,
+                      outline: "none",
+                      textAlign: "right",
+                      background: "#ffffff",
+                      color: "#0a0e16",
+                      fontWeight: 700,
+                    }}
                   />
                 </div>
               </div>
 
+              {/* Discount */}
               <div
                 style={{
                   display: "flex",
@@ -2043,7 +2222,7 @@ export default function PosPage() {
                   alignItems: "center",
                 }}
               >
-                <span style={{ fontSize: 12, color: "#56606e" }}>
+                <span style={{ fontSize: 12, color: "#ffffff", fontWeight: 600 }}>
                   Discount (৳):
                 </span>
                 <input
@@ -2052,29 +2231,44 @@ export default function PosPage() {
                   placeholder="0"
                   value={discTk || ""}
                   onChange={(e) => setDiscTk(Number(e.target.value) || 0)}
-                  style={{ ...R_IN, width: 84, padding: "4px 8px" }}
+                  style={{
+                    border: "1px solid rgba(0,0,0,0.15)",
+                    borderRadius: 4,
+                    padding: "4px 8px",
+                    fontSize: 12,
+                    width: 84,
+                    outline: "none",
+                    textAlign: "right",
+                    background: "#ffffff",
+                    color: "#0a0e16",
+                    fontWeight: 700,
+                  }}
                 />
               </div>
 
+              {/* Change Amount */}
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   fontSize: 12,
-                  borderTop: "1px solid #c8d8e8",
+                  borderTop: "1px solid rgba(255,255,255,0.25)",
                   paddingTop: 6,
                   marginTop: 2,
                 }}
               >
-                <span style={{ color: "#56606e", fontWeight: 600 }}>
+                <span style={{ color: "#ffffff", fontWeight: 700 }}>
                   Change:
                 </span>
                 <span
                   style={{
                     fontWeight: 800,
                     fontSize: 14,
-                    color: changeAmt >= 0 ? "#0d9e72" : "#c0303a",
+                    color: "#ffffff",
+                    background: "rgba(0,0,0,0.2)",
+                    padding: "2px 8px",
+                    borderRadius: 4,
                   }}
                 >
                   {changeAmt >= 0 ? "+" : ""}৳{changeAmt.toFixed(2)}
@@ -2090,26 +2284,25 @@ export default function PosPage() {
                 disabled={!cart.lines.length}
                 style={{
                   width: "100%",
-                  background: cart.lines.length
-                    ? "linear-gradient(135deg,#2a5fa8,#1e4a8c)"
-                    : "#c0ccd8",
-                  color: "#fff",
+                  background: cart.lines.length ? "#ffffff" : "rgba(255,255,255,0.3)",
+                  color: cart.lines.length ? P_DARK : "rgba(255,255,255,0.6)",
                   border: "none",
-                  borderRadius: 5,
-                  padding: "9px 0",
-                  fontSize: 13,
-                  fontWeight: 700,
+                  borderRadius: 6,
+                  padding: "10px 0",
+                  fontSize: 14,
+                  fontWeight: 800,
                   cursor: cart.lines.length ? "pointer" : "not-allowed",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 8,
                   boxShadow: cart.lines.length
-                    ? "0 3px 10px rgba(42,95,168,0.3)"
+                    ? "0 4px 14px rgba(0,0,0,0.2)"
                     : "none",
+                  transition: "all 0.15s ease",
                 }}
               >
-                <Printer size={15} /> Print Bill
+                <Printer size={16} /> Print Bill
               </button>
             </div>
           </div>
@@ -2119,8 +2312,8 @@ export default function PosPage() {
       {/* ━━ BOTTOM ACTION BAR ━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div
         style={{
-          background: "#ffffffff",
-          borderTop: "2px solid #ffffffff",
+          background: "transparent",
+          borderTop: "none",
           padding: "7px 14px",
           display: "flex",
           alignItems: "center",
@@ -2138,19 +2331,20 @@ export default function PosPage() {
           id="pos-refresh"
           onClick={() => {
             dispatch(clearCart());
+            dispatch(resetToDemo());
             setPay({ cash: 0, card: 0, mfs: 0 });
             setDiscPct(0);
             setDiscTk(0);
             setQuery("");
           }}
-          style={{ ...ACT_BTN, background: "#1a7a40" }}
+          style={{ ...ACT_BTN, background: P_COLOR }}
         >
           Refresh <RefreshCw size={13} />
         </button>
         <button
           id="pos-last-bill"
           onClick={() => lastInvoice && setLastInvoice({ ...lastInvoice })}
-          style={{ ...ACT_BTN, background: "#1a5aa8" }}
+          style={{ ...ACT_BTN, background: P_HOVER }}
         >
           Last Bill <Receipt size={13} />
         </button>
@@ -2188,7 +2382,7 @@ export default function PosPage() {
               id="pos-print-receipt-btn"
               onClick={() => window.print()}
               style={{
-                background: "#1e293b",
+                background: P_COLOR,
                 color: "#fff",
                 border: "none",
                 borderRadius: 6,
@@ -2199,7 +2393,7 @@ export default function PosPage() {
                 display: "flex",
                 alignItems: "center",
                 gap: 7,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                boxShadow: "0 4px 12px var(--primary-shadow, rgba(100,189,11,0.35))",
               }}
             >
               <Printer size={16} /> Print Bill

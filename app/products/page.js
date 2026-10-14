@@ -1,9 +1,9 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Plus, ChevronDown, X, ShieldCheck } from "lucide-react";
-import { addProduct } from "@/store/slices/productsSlice";
+import { addProduct, resetToDemo } from "@/store/slices/productsSlice";
 import PageHeader from "@/components/PageHeader";
 import Badge from "@/components/Badge";
 import { money } from "@/lib/format";
@@ -32,6 +32,12 @@ export default function ProductsPage() {
   const [expanded, setExpanded] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState(emptyForm);
+
+  useEffect(() => {
+    if (products.length < 20 || products.some((p) => !p.image || !p.image.startsWith("http"))) {
+      dispatch(resetToDemo());
+    }
+  }, [products, dispatch]);
 
   function submit(e) {
     e.preventDefault();
@@ -89,7 +95,13 @@ export default function ProductsPage() {
                   >
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-mist flex items-center justify-center text-base">{p.image}</div>
+                        <div className="w-9 h-9 rounded-lg bg-mist flex items-center justify-center overflow-hidden shrink-0 border border-line">
+                          {typeof p.image === "string" && (p.image.startsWith("http") || p.image.startsWith("/")) ? (
+                            <img src={p.image} alt={p.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                          ) : (
+                            <span className="text-base">{p.image || "📦"}</span>
+                          )}
+                        </div>
                         <div>
                           <p className="font-medium text-ink">{p.name}</p>
                           <p className="text-[11.5px] text-slate">{p.brand} · {p.variant}</p>
@@ -206,15 +218,15 @@ export default function ProductsPage() {
       <style jsx global>{`
         .input {
           width: 100%;
-          background: #eef5fc;
-          border: 1px solid #dce6f0;
+          background: var(--bg-mist, #f4f8f1);
+          border: 1px solid var(--border-line, #dde8d6);
           border-radius: 8px;
           padding: 8px 10px;
           font-size: 13px;
           color: #0a0e16;
         }
         .input:focus-visible {
-          outline: 2px solid #2f6fe4;
+          outline: 2px solid var(--primary);
         }
       `}</style>
     </div>

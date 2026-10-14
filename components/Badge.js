@@ -2,8 +2,9 @@ import clsx from "clsx";
 
 const TONES = {
   neutral: "bg-mist-deep text-slate",
-  sky: "bg-sky-dim text-sky",
-  good: "bg-good/10 text-good",
+  primary: "bg-primary-dim text-primary-dark",
+  sky: "bg-primary-dim text-primary-dark",
+  good: "bg-primary-dim text-primary-dark",
   warn: "bg-warn/10 text-warn",
   bad: "bg-bad/10 text-bad",
   ink: "bg-ink text-white",
