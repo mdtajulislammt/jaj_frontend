@@ -4,20 +4,21 @@
 
 :root {
   /* ━━ Global Brand Theme Color ━━━━━━━━━━━━━━━━━━━━━━━━━
-     Change --primary to any hex code to recolor the entire app! */
+     #64BD0B Primary Palette & Glass Accents */
   --primary: #64BD0B;
   --primary-hover: #529E08;
   --primary-dark: #3B7506;
   --primary-light: #84DB1B;
-  --primary-dim: #EBF8DC;
-  --primary-dim-subtle: #F6FCF1;
+  --primary-dim: rgba(100, 189, 11, 0.12);
+  --primary-dim-subtle: rgba(100, 189, 11, 0.05);
   --primary-text: #FFFFFF;
-  --primary-border: #4E9409;
+  --primary-border: rgba(100, 189, 11, 0.22);
   --primary-shadow: rgba(100, 189, 11, 0.38);
 
-  --bg-mist: #F4F8F1;
-  --bg-mist-deep: #E8F2E2;
-  --border-line: #DDE8D6;
+  --bg-mist: #F7FAF4;
+  --bg-mist-deep: #EAF4E3;
+  --bg-paper: rgba(255, 255, 255, 0.82);
+  --border-line: rgba(100, 189, 11, 0.14);
 }
 
 html {
@@ -25,12 +26,52 @@ html {
 }
 
 body {
-  @apply bg-mist text-ink font-body antialiased;
+  background-color: var(--bg-mist);
+  color: #0F172A;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: var(--primary);
   color: #ffffff;
+}
+
+/* ━━ Glassmorphism Core Classes ━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 32px 0 rgba(100, 189, 11, 0.07), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 30px -4px rgba(100, 189, 11, 0.07), 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -6px rgba(100, 189, 11, 0.16), 0 4px 12px rgba(0, 0, 0, 0.03);
+  border-color: rgba(100, 189, 11, 0.3);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Ensure any legacy bg-paper elements also receive the glassmorphism blur and subtle border */
+.bg-paper {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 /* Focus visibility (keyboard) */
@@ -41,7 +82,7 @@ select:focus-visible,
 [tabindex]:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -52,7 +93,7 @@ select:focus-visible,
   }
 }
 
-/* Signature: torn / perforated receipt edge, used on POS + invoice summary panels */
+/* Signature: torn / perforated receipt edge */
 .receipt-edge {
   position: relative;
 }
@@ -63,13 +104,13 @@ select:focus-visible,
   right: 0;
   top: -1px;
   height: 10px;
-  background-image: radial-gradient(circle at 8px 0, transparent 6px, #F4F8F1 6.5px);
+  background-image: radial-gradient(circle at 8px 0, transparent 6px, #F7FAF4 6.5px);
   background-size: 16px 12px;
   background-repeat: repeat-x;
 }
 
 .dashed-divider {
-  background-image: repeating-linear-gradient(90deg, #D4E2CA 0, #D4E2CA 6px, transparent 6px, transparent 12px);
+  background-image: repeating-linear-gradient(90deg, rgba(100,189,11,0.2) 0, rgba(100,189,11,0.2) 6px, transparent 6px, transparent 12px);
   height: 1px;
 }
 
@@ -82,6 +123,9 @@ select:focus-visible,
   height: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: #D4E2CA;
+  background-color: rgba(100, 189, 11, 0.25);
   border-radius: 999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 189, 11, 0.45);
 }
