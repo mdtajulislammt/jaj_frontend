@@ -38,7 +38,7 @@ export default function BackupPage() {
   };
 
   const handleDownloadFile = (id) => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ backupId: id, timestamp: new Date().toISOString(), system: "ElectroPOS" }));
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ backupId: id, timestamp: new Date().toISOString(), system: "Mona POS" }));
     const downloadAnchor = document.createElement("a");
     downloadAnchor.setAttribute("href", dataStr);
     downloadAnchor.setAttribute("download", `${id}.json`);

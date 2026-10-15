@@ -7,11 +7,11 @@ import StatCard from "@/components/StatCard";
 import Badge from "@/components/Badge";
 
 const INITIAL_USERS = [
-  { id: "u-1", name: "Md Tajul Islam", email: "tajul@electropos.com", phone: "01851004545", role: "Super Admin", branch: "All Branches", status: "active" },
-  { id: "u-2", name: "Shafiul Alam", email: "shafiul@electropos.com", phone: "01711223399", role: "POS Cashier", branch: "Dhanmondi Branch", status: "active" },
-  { id: "u-3", name: "Nusrat Jahan", email: "nusrat@electropos.com", phone: "01998877665", role: "Store Manager", branch: "Dhanmondi Branch", status: "active" },
-  { id: "u-4", name: "Imtiaz Hossain", email: "imtiaz@electropos.com", phone: "01622334455", role: "Warehouse Officer", branch: "Central Warehouse Hub", status: "active" },
-  { id: "u-5", name: "Karim Uddin", email: "karim@electropos.com", phone: "01511224488", role: "POS Cashier", branch: "Uttara Superstore", status: "active" },
+  { id: "u-1", name: "Md Tajul Islam", email: "tajul@monapos.com", phone: "01851004545", role: "Super Admin", branch: "All Branches", status: "active" },
+  { id: "u-2", name: "Shafiul Alam", email: "shafiul@monapos.com", phone: "01711223399", role: "POS Cashier", branch: "Dhanmondi Branch", status: "active" },
+  { id: "u-3", name: "Nusrat Jahan", email: "nusrat@monapos.com", phone: "01998877665", role: "Store Manager", branch: "Dhanmondi Branch", status: "active" },
+  { id: "u-4", name: "Imtiaz Hossain", email: "imtiaz@monapos.com", phone: "01622334455", role: "Warehouse Officer", branch: "Central Warehouse Hub", status: "active" },
+  { id: "u-5", name: "Karim Uddin", email: "karim@monapos.com", phone: "01511224488", role: "POS Cashier", branch: "Uttara Superstore", status: "active" },
 ];
 
 export default function UsersPage() {
@@ -156,7 +156,7 @@ export default function UsersPage() {
                 <input
                   type="email"
                   required
-                  placeholder="e.g. mamun@electropos.com"
+                  placeholder="e.g. mamun@monapos.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-[13px] text-slate-800 focus:outline-none focus:border-[#64BD0B]"

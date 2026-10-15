@@ -1,8 +1,7 @@
-# ElectroPOS — Frontend
+# Mona POS — Frontend
 
-A frontend-only Next.js console for an electronics/superstore retail POS, built from your
-Bengali business-flow spec: PO → GRN (IMEI capture) → Inventory → POS billing (split/due
-payment) → Sales Return → RTV.
+A frontend Next.js console for retail & superstore POS, built with complete modules:
+Quick Launcher → POS Billing → Inventory → Sales & CRM → Procurement & SCM → Reports & Settings.
 
 ## Stack
 - **Next.js 14** (App Router, JavaScript)

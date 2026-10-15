@@ -4,8 +4,8 @@ import Sidebar from "@/components/Sidebar";
 import Topbar from "@/components/Topbar";
 
 export const metadata = {
-  title: "ElectroPOS · Retail & Superstore Console",
-  description: "Cloud POS for electronics & superstore retail — IMEI tracking, warranty, EMI/Due.",
+  title: "Mona POS · Retail & Superstore Console",
+  description: "Cloud POS for retail & superstores — IMEI tracking, warranty, EMI/Due.",
 };
 
 export default function RootLayout({ children }) {

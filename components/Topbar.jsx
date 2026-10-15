@@ -1,62 +1,85 @@
 "use client";
 
-import { Search, Bell, MapPin, ChevronDown } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { setBranch } from "@/store/slices/uiSlice";
+import { usePathname } from "next/navigation";
+import { Search, ScanLine } from "lucide-react";
 import Link from "next/link";
 
 export default function Topbar() {
-  const dispatch = useDispatch();
-  const { activeBranch, branches } = useSelector((s) => s.ui);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   return (
-    <header className="h-16 bg-white/75 backdrop-blur-xl border-b border-white/80 shadow-[0_4px_24px_-4px_rgba(100,189,11,0.06)] flex items-center gap-4 px-4 md:px-6 sticky top-0 z-30">
-      {/* ━━ Branch Selector ━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="hidden md:flex items-center gap-2 text-slate-700 text-sm">
-        <div className="relative">
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md border border-[#64BD0B]/20 hover:border-[#64BD0B]/40 rounded-xl px-3 py-1.5 shadow-sm transition-all">
-            <MapPin size={15} className="text-[#64BD0B] shrink-0" />
-            <select
-              value={activeBranch}
-              onChange={(e) => dispatch(setBranch(e.target.value))}
-              className="appearance-none bg-transparent pr-6 text-slate-800 text-[13px] font-semibold focus-visible:outline-none cursor-pointer"
-            >
-              {branches.map((b) => (
-                <option key={b} value={b} className="text-slate-800 bg-white">
-                  {b} Branch
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={13} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+    <header className="h-16 bg-[#64BD0B] text-white shadow-[0_4px_24px_rgba(100,189,11,0.22)] border-b border-[#529E08] flex items-center justify-between gap-4 px-4 md:px-6 sticky top-0 z-30 select-none">
+      {/* ━━ Left: Brand Logo (Only shown on Quick Actions Home /) ━━━ */}
+      {isHome ? (
+        <Link
+          href="/"
+          title="Quick Actions Home"
+          className="flex items-center gap-2.5 py-1 px-2 rounded-xl hover:bg-white/10 transition-colors group shrink-0"
+        >
+          <div className="w-8 h-8 rounded-lg bg-white text-[#3B7506] flex items-center justify-center font-black shadow-sm group-hover:scale-105 transition-transform">
+            <ScanLine size={18} strokeWidth={2.8} />
+          </div>
+          <div className="leading-tight">
+            <span className="font-extrabold text-base md:text-lg tracking-tight text-white flex items-center gap-1.5">
+              Mona POS
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            </span>
+            <span className="text-[9px] font-bold text-white/80 tracking-wider uppercase block">
+              RETAIL &amp; SUPERSTORE
+            </span>
+          </div>
+        </Link>
+      ) : (
+        /* Empty spacer on inner pages so search bar aligns nicely */
+        <div className="w-2 shrink-0" />
+      )}
+
+      {/* ━━ Center: Search Bar (Hidden on Home /, shown on inner pages) ━━━ */}
+      {!isHome ? (
+        <div className="flex-1 max-w-md relative mx-2">
+          <div className="w-full relative flex items-center bg-white/20 hover:bg-white/25 focus-within:bg-white border border-white/30 focus-within:border-white rounded-xl transition-all group">
+            <Search
+              size={15}
+              className="absolute left-3.5 text-white/80 group-focus-within:text-[#3B7506] pointer-events-none transition-colors"
+            />
+            <input
+              placeholder="Search product, invoice, customer…"
+              className="w-full bg-transparent pl-10 pr-4 py-2 text-[13px] text-white placeholder:text-white/70 group-focus-within:text-slate-800 group-focus-within:placeholder:text-slate-400 focus-visible:outline-none transition-colors"
+            />
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex-1" />
+      )}
 
-      {/* ━━ Search Bar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex-1 max-w-md relative">
-        <div className="relative flex items-center bg-white/70 backdrop-blur-md border border-slate-200/80 hover:border-[#64BD0B]/40 focus-within:border-[#64BD0B] focus-within:bg-white focus-within:shadow-[0_0_0_3px_rgba(100,189,11,0.15)] rounded-xl transition-all">
-          <Search size={15} className="absolute left-3.5 text-[#64BD0B]/80 pointer-events-none" />
-          <input
-            placeholder="Search product, IMEI, invoice, customer…"
-            className="w-full bg-transparent pl-10 pr-4 py-2 text-[13px] text-slate-800 placeholder:text-slate-400 focus-visible:outline-none"
-          />
-        </div>
-      </div>
-
-      {/* ━━ Actions & User ━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="ml-auto flex items-center gap-3">
+      {/* ━━ Right: POS Button & 50% Radius Circular Avatar ━━━━━━━━━ */}
+      <div className="flex items-center gap-3 shrink-0">
+        {/* POS Button */}
         <Link
           href="/pos"
-          className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-[#64BD0B] to-[#529E08] hover:from-[#5CB209] hover:to-[#488E06] text-white text-[13px] font-bold px-4 py-2 rounded-xl shadow-[0_4px_16px_rgba(100,189,11,0.35)] hover:shadow-[0_6px_20px_rgba(100,189,11,0.45)] hover:scale-[1.02] transition-all"
+          className="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-[#3B7506] text-[13px] font-extrabold px-4 py-2 rounded-xl shadow-[0_4px_14px_rgba(0,0,0,0.12)] hover:scale-[1.02] transition-all"
         >
-          <span>+ New Sale</span>
+          POS
         </Link>
-        <button className="relative w-9 h-9 rounded-xl bg-white/75 backdrop-blur-md border border-slate-200/70 hover:border-[#64BD0B]/40 hover:bg-white flex items-center justify-center text-slate-600 hover:text-[#3B7506] shadow-sm transition-all">
-          <Bell size={16} />
-          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
-        </button>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#64BD0B] to-[#7ADB1F] text-white flex items-center justify-center text-[12.5px] font-bold font-display shadow-[0_4px_12px_rgba(100,189,11,0.35)] ring-2 ring-white/90">
-          SM
+
+        {/* Profile Avatar with 50% Radius (rounded-full) */}
+        <div
+          className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/80 shadow-md shrink-0 cursor-pointer bg-white relative flex items-center justify-center group hover:ring-white transition-all"
+          title="Admin Profile"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+            alt="Profile Avatar"
+            className="w-full h-full object-cover rounded-full"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+          {/* Fallback initials if offline or image failed */}
+          <span className="font-display font-black text-xs text-[#3B7506] select-none absolute inset-0 flex items-center justify-center -z-10 bg-white">
+            HM
+          </span>
         </div>
       </div>
     </header>

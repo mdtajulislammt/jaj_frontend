@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader";
 export default function ProfileSettingsPage() {
   const [profile, setProfile] = useState({
     name: "Md Tajul Islam",
-    email: "tajul@electropos.com",
+    email: "tajul@monapos.com",
     phone: "01851004545",
     role: "System Super Administrator",
     branch: "Dhanmondi Flagship Branch",

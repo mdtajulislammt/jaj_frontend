@@ -405,7 +405,7 @@ export default function PosPage() {
         customer?.address && customer.address !== "-"
           ? customer.address
           : "Zigatola, Dhanmondi, Dhaka",
-      shopName: "POS",
+      shopName: "Mona POS",
       shopTagline: "Generel store",
       shopHotline: "01851004545",
       shopEmail: "tajul@gmail.com",
@@ -2447,7 +2447,7 @@ export default function PosPage() {
                   marginBottom: 2,
                 }}
               >
-                {lastInvoice.shopName || "আমার দোকান"}
+                {lastInvoice.shopName || "Mona POS"}
               </div>
               <div style={{ fontSize: 16, fontWeight: 800, color: "#0f172a" }}>
                 {lastInvoice.shopTagline || "Generel store"}

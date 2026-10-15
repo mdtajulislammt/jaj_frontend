@@ -240,7 +240,7 @@ export default function SalesPage() {
               <div className="w-10 h-10 rounded-xl bg-[#64BD0B] text-white flex items-center justify-center mx-auto mb-2 font-bold shadow-md">
                 <Receipt size={20} />
               </div>
-              <h3 className="font-display font-bold text-lg text-slate-900">ElectroPOS Retail Receipt</h3>
+              <h3 className="font-display font-bold text-lg text-slate-900">Mona POS Retail Receipt</h3>
               <p className="text-[12px] text-slate-500">Invoice: {selectedInvoice.id}</p>
             </div>
 
