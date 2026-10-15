@@ -147,9 +147,6 @@ export default function DashboardPage() {
       <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/80 p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-wrap items-center justify-between gap-4">
         {/* Left: Heading & Filters */}
         <div className="flex flex-wrap items-center gap-4">
-          <h1 className="font-display font-extrabold text-xl text-slate-800 tracking-tight mr-2">
-            Dashboard
-          </h1>
 
           {/* Start Date */}
           <div className="flex flex-col">
