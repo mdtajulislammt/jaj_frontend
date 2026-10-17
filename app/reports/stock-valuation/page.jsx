@@ -43,22 +43,8 @@ export default function StockValuationPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <FileSpreadsheet size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Inventory &amp; Stock Valuation Reports (FIFO/FEFO)
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Audited financial valuation of on-hand inventory using First-In-First-Out, FEFO batch costing, and gross margin forecasts.
-          </p>
-        </div>
-
+      {/* ━━ Method Switcher ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <div className="flex items-center gap-2">
           {/* Method Switcher */}
           <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold border border-slate-200">

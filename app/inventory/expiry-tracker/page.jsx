@@ -115,22 +115,8 @@ export default function ExpiryTrackerPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <CalendarClock size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Batch &amp; Expiry Date Tracker
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Track product shelf-life, near-expiry alert batches, warranty expirations, and initiate clearance markdowns or vendor returns.
-          </p>
-        </div>
-
+      {/* ━━ Actions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <div className="flex items-center gap-2">
           <Link
             href="/procurement/damage"

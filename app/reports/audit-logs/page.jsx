@@ -99,22 +99,8 @@ export default function AuditLogsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-red-500/10 text-red-600">
-              <ShieldAlert size={22} className="text-red-600" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Audit Logs &amp; Security Compliance
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Tamper-proof activity logs tracking voided sales, cashier price overrides, manual cash drawer kicks, and supervisor overrides.
-          </p>
-        </div>
-
+      {/* ━━ Export Action ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <button
           onClick={() => window.print()}
           className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs"

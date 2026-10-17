@@ -136,13 +136,8 @@ export default function SuppliersPage() {
       {/* ━━ Top Status / Store Bar (Matching Screenshot Header) ━━ */}
       <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-slate-200">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
-              {activeTab === "create" ? "Add Supplier" : "Supplier Directory"}
-            </h1>
-          </div>
           {/* Mode Switcher Tabs */}
-          <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 ml-3">
+          <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button
               type="button"
               onClick={() => setActiveTab("create")}

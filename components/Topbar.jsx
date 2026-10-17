@@ -18,6 +18,7 @@ const ROUTE_MAP = {
   "/sales/customer-group": { module: "Sales", submodule: "Customer Groups", title: "Customer Groups" },
   "/sales/loyalty": { module: "Sales", submodule: "Loyalty", title: "Loyalty Points & Rewards" },
   "/products": { module: "Products", submodule: "Products", title: "Products Catalog" },
+  "/products/create": { module: "Products", submodule: "Add Product", title: "Add New Product" },
   "/products/category": { module: "Products", submodule: "Category", title: "Categories" },
   "/products/sub-category": { module: "Products", submodule: "Sub Category", title: "Sub Categories" },
   "/products/brand": { module: "Products", submodule: "Brand", title: "Brands" },
@@ -86,26 +87,19 @@ export default function Topbar() {
   const currentNav = getNavInfo(pathname || "/");
 
   return (
-    <header className="h-16 bg-[#64BD0B] text-white shadow-[0_4px_24px_rgba(100,189,11,0.22)] border-b border-[#529E08] flex items-center justify-between gap-4 px-4 md:px-6 sticky top-0 z-30 select-none">
+    <header className="h-16 bg-[#64BD0B] text-white shadow-[0_4px_24px_rgba(100,189,11,0.22)] flex items-center justify-between gap-4 px-4 md:px-6 sticky top-0 z-30 select-none">
       {/* ━━ Left: Brand Logo (on Home /) OR Dynamic Module / Sub-Module Name (on Inner Pages) ━━━ */}
       {isHome ? (
         <Link
           href="/"
           title="Quick Actions Home"
-          className="flex items-center gap-2.5 py-1 px-2 rounded-xl hover:bg-white/10 transition-colors group shrink-0"
+          className="flex items-center py-1 px-2 rounded-xl hover:bg-white/10 transition-colors group shrink-0"
         >
-          <div className="w-8 h-8 rounded-lg bg-white text-[#3B7506] flex items-center justify-center font-black shadow-sm group-hover:scale-105 transition-transform">
-            <ScanLine size={18} strokeWidth={2.8} />
-          </div>
-          <div className="leading-tight">
-            <span className="font-extrabold text-base md:text-lg tracking-tight text-white flex items-center gap-1.5">
-              Mona POS
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            </span>
-            <span className="text-[9px] font-bold text-white/80 tracking-wider uppercase block">
-              RETAIL &amp; SUPERSTORE
-            </span>
-          </div>
+          <img
+            src="/logo-white.png"
+            alt="Mona Pos"
+            className="h-8 md:h-9 w-auto object-contain group-hover:scale-105 transition-transform"
+          />
         </Link>
       ) : (
         <div className="flex items-center gap-3 shrink-0 py-1">

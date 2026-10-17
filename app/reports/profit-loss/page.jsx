@@ -47,22 +47,8 @@ export default function ProfitLossPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <DollarSign size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Real-time Revenue &amp; Profit &amp; Loss (P&amp;L)
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Real-time financial income statement detailing gross sales revenue, COGS, gross margins, operational overheads, and net bottom-line profit.
-          </p>
-        </div>
-
+      {/* ━━ Controls Bar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <div className="flex items-center gap-2">
           {/* Period Selector */}
           <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold border border-slate-200">

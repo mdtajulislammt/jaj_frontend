@@ -121,16 +121,7 @@ export default function ReturnsPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display font-bold text-2xl text-slate-900 tracking-tight">
-            Create New RTV
-          </h1>
-          <p className="text-slate-500 text-[13px] mt-0.5">
-            Return to Vendor (RTV) RMA gate pass and defective stock dispatch
-          </p>
-        </div>
-
+      <div className="flex flex-wrap items-center justify-end gap-4 mb-2">
         {/* Tab Toggle */}
         <div className="flex items-center gap-1.5 p-1 bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-xl shadow-sm">
           <button

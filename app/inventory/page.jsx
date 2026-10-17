@@ -413,12 +413,7 @@ export default function InventoryPage() {
   return (
     <div className="space-y-4 max-w-[1700px] mx-auto select-none">
       {/* ━━ Top Status Header Bar (Matching Screenshot Header) ━━ */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
-            Products Inventory
-          </h1>
-        </div>
+      <div className="flex flex-wrap items-center justify-end gap-4 pb-2 border-b border-slate-200">
 
         {/* Right Corner Badges (Matching Screenshot 2) */}
         <div className="flex items-center gap-4 text-xs text-slate-600">

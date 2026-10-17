@@ -98,22 +98,8 @@ export default function AttendancePage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <UserCog size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Attendance &amp; Shifts Management
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Real-time biometric punch logs, shift allocations, late arrival tracking, and daily cashier check-in status.
-          </p>
-        </div>
-
+      {/* ━━ Sync Action ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <button
           onClick={() => alert("Biometric terminals synced: All 4 outlets connected.")}
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#64BD0B] hover:bg-[#529b09] text-white font-bold text-sm shadow-[0_4px_14px_rgba(100,189,11,0.35)] transition-all"

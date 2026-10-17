@@ -18,6 +18,7 @@ import {
   Contact,
   Gift,
   Package,
+  Plus,
   Layers,
   Tag,
   Boxes,
@@ -220,24 +221,16 @@ export default function Sidebar() {
       <Link
         href="/"
         title="Go to Quick Actions Home"
-        className="h-16 flex items-center gap-3 px-4 border-b border-[#64BD0B]/15 bg-white/80 backdrop-blur-md shrink-0 hover:bg-[#64BD0B]/10 transition-colors group"
+        className="h-16 flex items-center justify-center my-4  bg-white/80 backdrop-blur-md shrink-0 hover:bg-[#64BD0B]/10 transition-colors group overflow-hidden"
       >
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#64BD0B] to-[#7adb1f] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#64BD0B]/30 font-bold group-hover:scale-105 transition-transform">
-          <ScanLine size={19} strokeWidth={2.6} />
+        <div className="flex items-center justify-center w-full ">
+          <img
+            src="/logo.png"
+            alt="Mona Pos"
+            className={`object-contain transition-all duration-200 group-hover:scale-105 ${collapsed ? "h-12 w-auto max-w-[58px]" : "h-16 w-auto max-w-[190px]"
+              }`}
+          />
         </div>
-        {!collapsed && (
-          <div className="leading-tight min-w-0">
-            <div className="flex items-center gap-1.5">
-              <p className="font-display font-extrabold text-[16px] text-slate-800 tracking-tight group-hover:text-[#3B7506] transition-colors">
-                Mona POS
-              </p>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#64BD0B] animate-pulse" />
-            </div>
-            <p className="text-[9.5px] font-bold text-[#3B7506] tracking-wider uppercase">
-              RETAIL &amp; SUPERSTORE
-            </p>
-          </div>
-        )}
       </Link>
 
       {/* ━━ Navigation List (10 Modules Accordion) ━━━ */}

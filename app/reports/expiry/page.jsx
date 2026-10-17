@@ -33,22 +33,8 @@ export default function ExpiryForecastPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <CalendarClock size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Expiry Forecast &amp; Aging Risk Reports
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Predictive forecasting of product shelf-life depletion, potential financial write-offs, and preemptive liquidation strategies.
-          </p>
-        </div>
-
+      {/* ━━ Print Action ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <button
           onClick={() => window.print()}
           className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs"

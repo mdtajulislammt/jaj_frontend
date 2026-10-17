@@ -137,22 +137,8 @@ export default function SalesReturnsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header & Tab Switcher ━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <Undo2 size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Sales Returns &amp; Exchanges
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Process customer refunds, defective product exchanges, and inventory restocking with invoice audit trails.
-          </p>
-        </div>
-
+      {/* ━━ Tab Switcher ━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         {/* Tab Switcher */}
         <div className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/80">
           <button

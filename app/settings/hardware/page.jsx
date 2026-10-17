@@ -78,22 +78,8 @@ export default function HardwareSettingsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <Printer size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Hardware &amp; Peripheral Settings
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Configure ESC/POS thermal receipt printers, electronic weighing scales, RJ11 cash drawers, and barcode scanners.
-          </p>
-        </div>
-
+      {/* ━━ Save Action ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <button
           onClick={() => {
             setStatusMsg("All hardware settings saved successfully!");

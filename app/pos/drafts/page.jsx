@@ -129,22 +129,8 @@ export default function PosDraftsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ━━ Header & Quick Action ━━━━━━━━━━━━━━━━━━━ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#64BD0B]/10 text-[#3B7506]">
-              <FileText size={22} className="text-[#3B7506]" />
-            </span>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">
-              Hold / Draft Orders (Parked Carts)
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Manage parked orders from the POS terminal, review pending customer carts, and resume checkout instantly.
-          </p>
-        </div>
-
+      {/* ━━ Quick Action ━━━━━━━━━━━━━━━━━━━ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-2">
         <div className="flex items-center gap-3">
           <Link
             href="/pos"
