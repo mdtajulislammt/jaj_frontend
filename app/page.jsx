@@ -82,7 +82,7 @@ const QUICK_ACTIONS = [
     title: "Purchase",
     href: "/purchase-orders",
     icon: Banknote,
-    description: "Purchase Orders (PO)",
+    description: "Purchase Orders ",
   },
   {
     id: "damage",

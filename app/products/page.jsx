@@ -63,7 +63,7 @@ export default function ProductsPage() {
         action={
           <button
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center gap-2 bg-sky hover:bg-sky/90 text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg shadow-pop transition-colors"
+            className="inline-flex items-center gap-2 bg-[#64BD0B] hover:bg-[#529E08] text-white text-[13px] font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all hover:scale-[1.02]"
           >
             <Plus size={15} /> Add Product
           </button>
@@ -157,13 +157,13 @@ export default function ProductsPage() {
 
       {modalOpen && (
         <div className="fixed inset-0 bg-ink/50 flex items-center justify-center p-4 z-50">
-          <form onSubmit={submit} className="bg-paper rounded-xl2 shadow-pop max-w-lg w-full overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-line">
+          <form onSubmit={submit} className="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden border border-slate-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-sky" />
-                <h2 className="font-display font-semibold text-ink text-[15px]">Add New Product</h2>
+                <ShieldCheck size={18} className="text-[#64BD0B]" />
+                <h2 className="font-bold text-slate-800 text-[15px]">Add New Product</h2>
               </div>
-              <button type="button" onClick={() => setModalOpen(false)} className="text-slate-light hover:text-ink">
+              <button type="button" onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-800 p-1 rounded-lg hover:bg-slate-100 transition-colors">
                 <X size={18} />
               </button>
             </div>
@@ -190,10 +190,10 @@ export default function ProductsPage() {
               <Field label="Barcode">
                 <input value={form.barcode} onChange={(e) => setForm({ ...form, barcode: e.target.value })} className="input" />
               </Field>
-              <Field label="Cost Price (৳)">
+              <Field label="Cost Price / TP (৳)">
                 <input type="number" value={form.costPrice} onChange={(e) => setForm({ ...form, costPrice: e.target.value })} className="input" />
               </Field>
-              <Field label="Sell Price (৳)">
+              <Field label="Sell Price / MRP (৳)">
                 <input type="number" value={form.sellPrice} onChange={(e) => setForm({ ...form, sellPrice: e.target.value })} className="input" />
               </Field>
               <Field label="Warranty (months)">
@@ -203,11 +203,11 @@ export default function ProductsPage() {
                 <input value={form.warrantyLabel} onChange={(e) => setForm({ ...form, warrantyLabel: e.target.value })} className="input" />
               </Field>
             </div>
-            <div className="px-6 py-4 border-t border-line flex justify-end gap-2.5">
-              <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 rounded-lg text-[13px] font-medium text-slate hover:bg-mist transition-colors">
+            <div className="px-6 py-4 border-t border-slate-200 flex justify-end gap-2.5 bg-slate-50">
+              <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 rounded-xl text-[13px] font-semibold text-slate-600 hover:bg-slate-200 transition-colors">
                 Cancel
               </button>
-              <button type="submit" className="px-4 py-2 rounded-lg text-[13px] font-semibold bg-sky text-white hover:bg-sky/90 transition-colors shadow-pop">
+              <button type="submit" className="px-5 py-2 rounded-xl text-[13px] font-bold bg-[#64BD0B] text-white hover:bg-[#529E08] transition-all shadow-sm hover:scale-[1.01]">
                 Save Product
               </button>
             </div>
