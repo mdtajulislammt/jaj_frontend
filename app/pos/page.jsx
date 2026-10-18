@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Search,
@@ -109,9 +110,8 @@ const R_SEL = {
 const ACT_BTN = {
   color: "#fff",
   border: "none",
-  borderRadius: 4,
-  padding: "7px 16px",
-  fontSize: 13,
+  padding: "7px 18px",
+  fontSize: 18,
   fontWeight: 600,
   cursor: "pointer",
   display: "flex",
@@ -253,13 +253,13 @@ export default function PosPage() {
   const [lastInvoice, setLastInvoice] = useState(null);
   const searchRef = useRef(null);
 
-  /* ── Customer search state ── */
-  const [cusSearch, setCusSearch] = useState("");
+  /* ── Customer search state (Default to Walk-in Customer) ── */
+  const [cusSearch, setCusSearch] = useState("Walk-in Customer");
   const [cusDropOpen, setCusDropOpen] = useState(false);
   const cusRef = useRef(null);
 
   const categories = useSelector((s) => s.products.categories) || [];
-  const [viewMode, setViewMode] = useState("cards"); // "cards" | "table"
+  const [viewMode, setViewMode] = useState("table"); // Default to "table" (List view)
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // Auto-sync 20 demo products if browser rehydrated an old cache
@@ -268,6 +268,16 @@ export default function PosPage() {
       dispatch(resetToDemo());
     }
   }, [products, dispatch]);
+
+  // Ensure Walk-in Customer is set by default in cart
+  useEffect(() => {
+    const walkCust = customers.find(
+      (c) => c.name.toLowerCase().includes("walk") || c.id === "cus-003"
+    );
+    if (walkCust && !cart.customerId) {
+      dispatch(setCustomer(walkCust.id));
+    }
+  }, [customers, cart.customerId, dispatch]);
 
   /* ── All products filtered for Card Grid ── */
   const displayProducts = useMemo(() => {
@@ -444,6 +454,7 @@ export default function PosPage() {
     dispatch(createInvoice(payload));
     setLastInvoice({ ...payload, lineCount: cart.lines.length });
     dispatch(clearCart());
+    setCusSearch("Walk-in Customer");
     setPay({ cash: 0, card: 0, mfs: 0 });
     setDiscPct(0);
     setDiscTk(0);
@@ -496,47 +507,30 @@ export default function PosPage() {
           boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
         }}
       >
-        {/* ── LEFT: Logo ── */}
-        <div
+        {/* ── LEFT: Mona POS Official Logo ── */}
+        <Link
+          href="/"
+          title="Go to Home / Dashboard"
           style={{
             display: "flex",
             alignItems: "center",
             gap: 10,
             flexShrink: 0,
+            textDecoration: "none",
+            padding: "2px 4px",
+            borderRadius: 8,
           }}
         >
-          <div
+          <img
+            src="/logo-white.png"
+            alt="Mona POS"
             style={{
-              width: 44,
-              height: 44,
-              borderRadius: "50%",
-              background: "#ffffff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
+              height: 38,
+              width: "auto",
+              objectFit: "contain",
             }}
-          >
-            <span style={{ fontSize: 24, color: P_DARK, fontWeight: 800 }}>⚕</span>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: 22,
-                fontWeight: 800,
-                color: "#ffffff",
-                letterSpacing: 1,
-                lineHeight: 1.15,
-                whiteSpace: "nowrap",
-              }}
-            >
-              POS
-            </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.9)", letterSpacing: 0.4, fontWeight: 500 }}>
-              management system
-            </div>
-          </div>
-        </div>
+          />
+        </Link>
 
         {/* ── RIGHT: Customer Search + Add + gap + Exit ── */}
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -555,7 +549,10 @@ export default function PosPage() {
                   setCusSearch(e.target.value);
                   setCusDropOpen(true);
                 }}
-                onFocus={() => setCusDropOpen(true)}
+                onFocus={(e) => {
+                  setCusDropOpen(true);
+                  e.target.select();
+                }}
                 style={{
                   width: "100%",
                   boxSizing: "border-box",
@@ -567,6 +564,7 @@ export default function PosPage() {
                   background: "#fff",
                   color: "#1a2e44",
                   cursor: "text",
+                  fontWeight: 600,
                 }}
               />
               <ChevronDown
@@ -602,7 +600,7 @@ export default function PosPage() {
                 {customers
                   .filter((c) => {
                     const q = cusSearch.trim().toLowerCase();
-                    if (!q) return true;
+                    if (!q || q === "walk-in customer" || q === "walk customer") return true;
                     return (
                       c.name.toLowerCase().includes(q) ||
                       (c.phone && c.phone.includes(q))
@@ -1023,7 +1021,7 @@ export default function PosPage() {
                     viewMode === "table" ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
                 }}
               >
-                <List size={13} /> Cart ({cart.lines.length})
+                <List size={13} /> List ({cart.lines.length})
               </button>
             </div>
           </div>
@@ -1463,31 +1461,39 @@ export default function PosPage() {
                         colSpan={12}
                         style={{
                           textAlign: "center",
-                          padding: "56px 0",
-                          color: "#a0b4c8",
+                          padding: "48px 20px",
+                          color: "#6b7c93",
                           fontSize: 13,
                         }}
                       >
                         <ShoppingCart
-                          size={32}
-                          style={{ margin: "0 auto 8px", opacity: 0.4 }}
+                          size={36}
+                          style={{ margin: "0 auto 10px", color: P_COLOR, opacity: 0.8 }}
                         />
-                        <div>No items added in cart</div>
+                        <div style={{ fontWeight: 700, fontSize: 15, color: "#1a2e44", marginBottom: 4 }}>
+                          তালিকা মোড (List View) — বিক্রয় রশিদ ফাঁকা
+                        </div>
+                        <div style={{ fontSize: 12, color: "#7a93aa", maxWidth: 440, margin: "0 auto 14px" }}>
+                          ওপরের সার্চ বক্সে পণ্যের নাম/বারকোড লিখুন অথবা সরাসরি বারকোড স্ক্যানার দিয়ে প্রোডাক্ট যুক্ত করুন।
+                        </div>
                         <button
                           onClick={() => setViewMode("cards")}
                           style={{
-                            marginTop: 10,
                             background: P_COLOR,
                             color: "#fff",
                             border: "none",
-                            borderRadius: 4,
-                            padding: "6px 14px",
+                            borderRadius: 6,
+                            padding: "7px 16px",
                             fontSize: 12,
-                            fontWeight: 600,
+                            fontWeight: 700,
                             cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 6,
+                            boxShadow: "0 2px 8px rgba(100,189,11,0.25)",
                           }}
                         >
-                          Browse Products (Cards)
+                          <LayoutGrid size={14} /> Browse Photo Cards
                         </button>
                       </td>
                     </tr>
@@ -1714,6 +1720,46 @@ export default function PosPage() {
               </table>
             </div>
           )}
+
+          {/* ━━ BOTTOM ACTION BAR ━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+          <div
+            style={{
+              background: "transparent",
+              width: "fit-content",
+              display: "flex",
+              alignItems: "center",
+              flexShrink: 0,
+            }}
+          >
+            <button id="pos-return" style={{ ...ACT_BTN, background: "#7b5c22" }}>
+              Return <RotateCcw size={13} />
+            </button>
+            <button id="pos-hold" style={{ ...ACT_BTN, background: "#c97520" }}>
+              Hold <Package size={13} />
+            </button>
+            <button
+              id="pos-refresh"
+              onClick={() => {
+                dispatch(clearCart());
+                dispatch(resetToDemo());
+                setPay({ cash: 0, card: 0, mfs: 0 });
+                setDiscPct(0);
+                setDiscTk(0);
+                setQuery("");
+                setCusSearch("Walk-in Customer");
+              }}
+              style={{ ...ACT_BTN, background: P_COLOR }}
+            >
+              Refresh <RefreshCw size={13} />
+            </button>
+            <button
+              id="pos-last-bill"
+              onClick={() => lastInvoice && setLastInvoice({ ...lastInvoice })}
+              style={{ ...ACT_BTN, background: P_HOVER }}
+            >
+              Last Bill <Receipt size={13} />
+            </button>
+          </div>
         </div>
 
         {/* ── RIGHT: Cart Items + Finalize Sale ─────────────────── */}
@@ -1721,11 +1767,15 @@ export default function PosPage() {
           style={{
             width: 340,
             flexShrink: 0,
+            height: "fit-content",
+            maxHeight: "100%",
+            alignSelf: "flex-start",
             background: P_COLOR,
             display: "flex",
             flexDirection: "column",
             overflowY: "auto",
             borderLeft: "1px solid " + P_DARK,
+            borderBottom: "1px solid " + P_DARK,
             color: "#ffffff",
           }}
         >
@@ -1779,8 +1829,7 @@ export default function PosPage() {
           {/* ── Cart Items List ── */}
           <div
             style={{
-              flex: 1,
-              maxHeight: 280,
+              height: 280,
               overflowY: "auto",
               padding: "6px 10px",
               background: "rgba(0,0,0,0.06)",
@@ -1790,8 +1839,13 @@ export default function PosPage() {
             {lineCalcs.length === 0 ? (
               <div
                 style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                   textAlign: "center",
-                  padding: "36px 10px",
+                  padding: "16px 10px",
                   color: "rgba(255,255,255,0.85)",
                 }}
               >
@@ -2288,8 +2342,8 @@ export default function PosPage() {
                   color: cart.lines.length ? P_DARK : "rgba(255,255,255,0.6)",
                   border: "none",
                   borderRadius: 6,
-                  padding: "10px 0",
-                  fontSize: 14,
+                  padding: "7px 18px",
+                  fontSize: 18,
                   fontWeight: 800,
                   cursor: cart.lines.length ? "pointer" : "not-allowed",
                   display: "flex",
@@ -2302,52 +2356,11 @@ export default function PosPage() {
                   transition: "all 0.15s ease",
                 }}
               >
-                <Printer size={16} /> Print Bill
+                <Printer size={18} /> Print Bill
               </button>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* ━━ BOTTOM ACTION BAR ━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div
-        style={{
-          background: "transparent",
-          borderTop: "none",
-          padding: "7px 14px",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          flexShrink: 0,
-        }}
-      >
-        <button id="pos-return" style={{ ...ACT_BTN, background: "#7b5c22" }}>
-          Return <RotateCcw size={13} />
-        </button>
-        <button id="pos-hold" style={{ ...ACT_BTN, background: "#c97520" }}>
-          Hold <Package size={13} />
-        </button>
-        <button
-          id="pos-refresh"
-          onClick={() => {
-            dispatch(clearCart());
-            dispatch(resetToDemo());
-            setPay({ cash: 0, card: 0, mfs: 0 });
-            setDiscPct(0);
-            setDiscTk(0);
-            setQuery("");
-          }}
-          style={{ ...ACT_BTN, background: P_COLOR }}
-        >
-          Refresh <RefreshCw size={13} />
-        </button>
-        <button
-          id="pos-last-bill"
-          onClick={() => lastInvoice && setLastInvoice({ ...lastInvoice })}
-          style={{ ...ACT_BTN, background: P_HOVER }}
-        >
-          Last Bill <Receipt size={13} />
-        </button>
       </div>
 
       {/* ━━ ORDER COMPLETE / THERMAL RECEIPT MODAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
