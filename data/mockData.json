@@ -1,0 +1,759 @@
+{
+  "warehouses": [
+    {
+      "id": "wh-001",
+      "name": "Central Depot Uttara",
+      "code": "CD-UTT",
+      "address": "House #06, Road #27, Sector #07, Uttara, Dhaka",
+      "type": "CENTRAL",
+      "contactPerson": "Golam Rabbani (Warehouse Head)",
+      "phone": "+8801711000101",
+      "isActive": true
+    },
+    {
+      "id": "wh-002",
+      "name": "Dhanmondi Retail Outlet",
+      "code": "BR-DHN",
+      "address": "Level 3, Road #04, Dhanmondi, Dhaka",
+      "type": "BRANCH",
+      "contactPerson": "Tariqul Islam (Branch Manager)",
+      "phone": "+8801711000102",
+      "isActive": true
+    },
+    {
+      "id": "wh-003",
+      "name": "Gulshan Flagship Store",
+      "code": "BR-GLS",
+      "address": "Avenue 1, Block C, Gulshan-2, Dhaka",
+      "type": "BRANCH",
+      "contactPerson": "Sabrina Akhter (Outlet Manager)",
+      "phone": "+8801711000103",
+      "isActive": true
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "sup-001",
+      "code": "SUP-SAM",
+      "name": "Samsung Bangladesh Distribution Ltd.",
+      "contact": "+8801811223344",
+      "email": "procurement@samsung-bd.com",
+      "address": "Tejgaon I/A, Dhaka",
+      "balance": 284500,
+      "leadTimeDays": 3,
+      "brand": "Samsung"
+    },
+    {
+      "id": "sup-002",
+      "code": "SUP-SNY",
+      "name": "Sony Gallery BD Ltd.",
+      "contact": "+8801719887766",
+      "email": "orders@sonygallery.bd",
+      "address": "Sonargaon Road, Dhaka",
+      "balance": 142000,
+      "leadTimeDays": 5,
+      "brand": "Sony"
+    },
+    {
+      "id": "sup-003",
+      "code": "SUP-WLT",
+      "name": "Walton Hi-Tech Industries PLC",
+      "contact": "+8801912445566",
+      "email": "corporate@waltonbd.com",
+      "address": "Chandra, Gazipur",
+      "balance": 68000,
+      "leadTimeDays": 2,
+      "brand": "Walton"
+    },
+    {
+      "id": "sup-004",
+      "code": "SUP-APL",
+      "name": "Apple Authorised National Distributor BD",
+      "contact": "+8801844998877",
+      "email": "enterprise@apple-distbd.com",
+      "address": "Banani, Dhaka",
+      "balance": 520000,
+      "leadTimeDays": 4,
+      "brand": "Apple"
+    }
+  ],
+  "customers": [
+    {
+      "id": "cus-001",
+      "name": "Tanvir Ahmed",
+      "phone": "+8801712345678",
+      "email": "tanvir.ahmed@gmail.com",
+      "address": "Dhanmondi, Dhaka",
+      "loyalty_points": 450,
+      "due_balance": 8500,
+      "credit_limit": 50000,
+      "tier": "Gold"
+    },
+    {
+      "id": "cus-002",
+      "name": "Nusrat Jahan",
+      "phone": "+8801819876543",
+      "email": "nusrat.jahan@yahoo.com",
+      "address": "Uttara, Dhaka",
+      "loyalty_points": 210,
+      "due_balance": 0,
+      "credit_limit": 25000,
+      "tier": "Silver"
+    },
+    {
+      "id": "cus-003",
+      "name": "Walk-in Customer",
+      "phone": "+8801900000000",
+      "email": "walkin@store.local",
+      "address": "Counter POS",
+      "loyalty_points": 0,
+      "due_balance": 0,
+      "credit_limit": 0,
+      "tier": "Regular"
+    },
+    {
+      "id": "cus-004",
+      "name": "TechCorp Solutions (Corporate)",
+      "phone": "+8801755112233",
+      "email": "accounts@techcorp-bd.com",
+      "address": "Gulshan-1, Dhaka",
+      "loyalty_points": 1820,
+      "due_balance": 33000,
+      "credit_limit": 200000,
+      "tier": "Platinum"
+    }
+  ],
+  "products": [
+    {
+      "id": "p-001",
+      "name": "Samsung Galaxy S24",
+      "brand": "Samsung",
+      "categoryId": "cat-mobile",
+      "categoryName": "Mobile",
+      "variant": "Black · 8GB/256GB",
+      "sku": "SGS24-BLK-256",
+      "barcode": "8801643921456",
+      "unit": "Pcs",
+      "costPrice": 82000,
+      "tp": 82000,
+      "sellPrice": 98000,
+      "mrp": 98000,
+      "warrantyMonths": 12,
+      "warrantyLabel": "1 Year Official",
+      "trackSerial": true,
+      "is_serialized": true,
+      "minStockAlert": 5,
+      "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=300&q=80",
+      "serials": [
+        { "imei": "356938035643809", "status": "IN_STOCK", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002" },
+        { "imei": "356938035643810", "status": "IN_STOCK", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002" },
+        { "imei": "356938035643811", "status": "SOLD", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002", "invoiceId": "INV-88229" },
+        { "imei": "356938035643812", "status": "IN_STOCK", "branch": "Gulshan Flagship Store", "branchId": "wh-003" },
+        { "imei": "356938035643815", "status": "IN_TRANSIT", "branch": "Central Depot Uttara", "branchId": "wh-001", "tpnId": "TPN-1011" }
+      ]
+    },
+    {
+      "id": "p-002",
+      "name": "Sony Bravia X75K",
+      "brand": "Sony",
+      "categoryId": "cat-tv",
+      "categoryName": "TV",
+      "variant": "55\" · 4K UHD Smart TV",
+      "sku": "SNY-BRV-55X75K",
+      "barcode": "4548736135702",
+      "unit": "Pcs",
+      "costPrice": 63000,
+      "tp": 63000,
+      "sellPrice": 79500,
+      "mrp": 79500,
+      "warrantyMonths": 24,
+      "warrantyLabel": "2 Years Service",
+      "trackSerial": true,
+      "is_serialized": true,
+      "minStockAlert": 3,
+      "image": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=300&q=80",
+      "serials": [
+        { "imei": "SN75K-004421", "status": "IN_STOCK", "branch": "Central Depot Uttara", "branchId": "wh-001" },
+        { "imei": "SN75K-004422", "status": "IN_STOCK", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002" },
+        { "imei": "SN75K-004423", "status": "DAMAGED_QUARANTINE", "branch": "Central Depot Uttara", "branchId": "wh-001", "reason": "Defective Display Panel" }
+      ]
+    },
+    {
+      "id": "p-003",
+      "name": "Apple iPhone 15 Pro",
+      "brand": "Apple",
+      "categoryId": "cat-mobile",
+      "categoryName": "Mobile",
+      "variant": "Natural Titanium · 256GB",
+      "sku": "IP15P-NAT-256",
+      "barcode": "0195949038291",
+      "unit": "Pcs",
+      "costPrice": 124000,
+      "tp": 124000,
+      "sellPrice": 145000,
+      "mrp": 145000,
+      "warrantyMonths": 12,
+      "warrantyLabel": "1 Year Official",
+      "trackSerial": true,
+      "is_serialized": true,
+      "minStockAlert": 4,
+      "image": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=300&q=80",
+      "serials": [
+        { "imei": "356938099912345", "status": "IN_STOCK", "branch": "Gulshan Flagship Store", "branchId": "wh-003" },
+        { "imei": "356938099912346", "status": "SOLD", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002", "invoiceId": "INV-88230" },
+        { "imei": "356938099912347", "status": "IN_STOCK", "branch": "Central Depot Uttara", "branchId": "wh-001" }
+      ]
+    },
+    {
+      "id": "p-004",
+      "name": "Walton Inverter AC 1.5T",
+      "brand": "Walton",
+      "categoryId": "cat-appliance",
+      "categoryName": "Appliances",
+      "variant": "1.5 Ton · Dual Inverter",
+      "sku": "WAL-AC-1.5T",
+      "barcode": "8941234567890",
+      "unit": "Pcs",
+      "costPrice": 41000,
+      "tp": 41000,
+      "sellPrice": 52900,
+      "mrp": 52900,
+      "warrantyMonths": 36,
+      "warrantyLabel": "3 Years Compressor",
+      "trackSerial": true,
+      "is_serialized": true,
+      "minStockAlert": 2,
+      "image": "https://images.unsplash.com/photo-1614633833026-0e9e145f4d4a?auto=format&fit=crop&w=300&q=80",
+      "serials": [
+        { "imei": "WFA2Q3-11029", "status": "IN_STOCK", "branch": "Central Depot Uttara", "branchId": "wh-001" },
+        { "imei": "WFA2Q3-11030", "status": "IN_STOCK", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002" }
+      ]
+    },
+    {
+      "id": "p-005",
+      "name": "Xiaomi Redmi Note 13",
+      "brand": "Xiaomi",
+      "categoryId": "cat-mobile",
+      "categoryName": "Mobile",
+      "variant": "Mint Green · 8GB/256GB",
+      "sku": "RN13-MG-256",
+      "barcode": "6941059654321",
+      "unit": "Pcs",
+      "costPrice": 21500,
+      "tp": 21500,
+      "sellPrice": 26990,
+      "mrp": 26990,
+      "warrantyMonths": 12,
+      "warrantyLabel": "1 Year Official",
+      "trackSerial": true,
+      "is_serialized": true,
+      "minStockAlert": 10,
+      "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=300&q=80",
+      "serials": [
+        { "imei": "869876054412201", "status": "IN_STOCK", "branch": "Central Depot Uttara", "branchId": "wh-001" },
+        { "imei": "869876054412202", "status": "IN_STOCK", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002" },
+        { "imei": "869876054412204", "status": "SOLD", "branch": "Dhanmondi Retail Outlet", "branchId": "wh-002", "invoiceId": "INV-88231" }
+      ]
+    }
+  ],
+  "purchaseOrders": [
+    {
+      "id": "PO-1042",
+      "supplierId": "sup-001",
+      "supplierName": "Samsung Bangladesh Distribution Ltd.",
+      "targetBranchId": "wh-001",
+      "targetBranchName": "Central Depot Uttara",
+      "date": "2026-10-10",
+      "expectedDeliveryDate": "2026-10-20",
+      "status": "APPROVED",
+      "lines": [
+        { "productId": "p-001", "productName": "Samsung Galaxy S24", "sku": "SGS24-BLK-256", "unitCost": 82000, "orderedQty": 20, "receivedQty": 0, "lineTotal": 1640000 }
+      ],
+      "subtotal": 1640000,
+      "tax": 0,
+      "shippingCost": 500,
+      "grandTotal": 1640500,
+      "notes": "Urgent festive stock fulfillment"
+    },
+    {
+      "id": "PO-1041",
+      "supplierId": "sup-002",
+      "supplierName": "Sony Gallery BD Ltd.",
+      "targetBranchId": "wh-001",
+      "targetBranchName": "Central Depot Uttara",
+      "date": "2026-10-08",
+      "expectedDeliveryDate": "2026-10-15",
+      "status": "PARTIALLY_RECEIVED",
+      "lines": [
+        { "productId": "p-002", "productName": "Sony Bravia X75K", "sku": "SNY-BRV-55X75K", "unitCost": 63000, "orderedQty": 10, "receivedQty": 6, "lineTotal": 630000 }
+      ],
+      "subtotal": 630000,
+      "tax": 0,
+      "shippingCost": 1200,
+      "grandTotal": 631200,
+      "notes": "First lot of 6 units received; 4 units pending"
+    },
+    {
+      "id": "PO-1040",
+      "supplierId": "sup-003",
+      "supplierName": "Walton Hi-Tech Industries PLC",
+      "targetBranchId": "wh-001",
+      "targetBranchName": "Central Depot Uttara",
+      "date": "2026-10-02",
+      "expectedDeliveryDate": "2026-10-07",
+      "status": "FULLY_RECEIVED",
+      "lines": [
+        { "productId": "p-004", "productName": "Walton Inverter AC 1.5T", "sku": "WAL-AC-1.5T", "unitCost": 41000, "orderedQty": 15, "receivedQty": 15, "lineTotal": 615000 }
+      ],
+      "subtotal": 615000,
+      "tax": 0,
+      "shippingCost": 2000,
+      "grandTotal": 617000,
+      "notes": "Full shipment cleared and checked into inventory"
+    },
+    {
+      "id": "PO-1039",
+      "supplierId": "sup-004",
+      "supplierName": "Apple Authorised National Distributor BD",
+      "targetBranchId": "wh-001",
+      "targetBranchName": "Central Depot Uttara",
+      "date": "2026-10-12",
+      "expectedDeliveryDate": "2026-10-25",
+      "status": "DRAFT",
+      "lines": [
+        { "productId": "p-003", "productName": "Apple iPhone 15 Pro", "sku": "IP15P-NAT-256", "unitCost": 124000, "orderedQty": 10, "receivedQty": 0, "lineTotal": 1240000 }
+      ],
+      "subtotal": 1240000,
+      "tax": 0,
+      "shippingCost": 0,
+      "grandTotal": 1240000,
+      "notes": "Awaiting management budget signoff"
+    }
+  ],
+  "grnNotes": [
+    {
+      "id": "GRN-0311",
+      "poId": "PO-1041",
+      "sourceType": "po_no",
+      "poStatus": "Partial GRN",
+      "date": "2026-10-09",
+      "voucherNo": "SNY-INV-9921",
+      "voucherDate": "2026-10-09",
+      "receivedBy": "Golam Rabbani (Storekeeper)",
+      "lines": [
+        {
+          "productId": "p-002",
+          "productName": "Sony Bravia X75K",
+          "orderedQty": 10,
+          "previouslyReceivedQty": 0,
+          "receivingQty": 6,
+          "damagedQty": 1,
+          "tp": 63000,
+          "cp": 63000,
+          "mrp": 79500,
+          "serials": ["SN75K-004421", "SN75K-004422", "SN75K-004423"]
+        }
+      ],
+      "shippingCost": 1200,
+      "total": 379200,
+      "note": "1 unit display panel cracked in transit, moved to damage quarantine"
+    },
+    {
+      "id": "GRN-0310",
+      "poId": "PO-1040",
+      "sourceType": "po_no",
+      "poStatus": "Full GRN",
+      "date": "2026-10-05",
+      "voucherNo": "WLT-INV-8832",
+      "voucherDate": "2026-10-05",
+      "receivedBy": "Golam Rabbani (Storekeeper)",
+      "lines": [
+        {
+          "productId": "p-004",
+          "productName": "Walton Inverter AC 1.5T",
+          "orderedQty": 15,
+          "previouslyReceivedQty": 0,
+          "receivingQty": 15,
+          "damagedQty": 0,
+          "tp": 41000,
+          "cp": 41000,
+          "mrp": 52900,
+          "serials": ["WFA2Q3-11029", "WFA2Q3-11030"]
+        }
+      ],
+      "shippingCost": 2000,
+      "total": 617000,
+      "note": "Complete consignment received in pristine condition"
+    },
+    {
+      "id": "GRN-0309",
+      "poId": "LOCAL-CONS-01",
+      "sourceType": "without_po",
+      "poStatus": "Full GRN",
+      "date": "2026-10-04",
+      "voucherNo": "LOC-CSH-554",
+      "voucherDate": "2026-10-04",
+      "receivedBy": "Tariqul Islam (Branch Manager)",
+      "lines": [
+        {
+          "productId": "p-005",
+          "productName": "Xiaomi Redmi Note 13",
+          "orderedQty": 5,
+          "previouslyReceivedQty": 0,
+          "receivingQty": 5,
+          "damagedQty": 0,
+          "tp": 21500,
+          "cp": 21500,
+          "mrp": 26990,
+          "serials": ["869876054412201", "869876054412202"]
+        }
+      ],
+      "shippingCost": 300,
+      "total": 107800,
+      "note": "Emergency stock purchase from authorised regional partner"
+    }
+  ],
+  "tpnManifests": [
+    {
+      "id": "TPN-1011",
+      "date": "2026-10-11",
+      "warehouseFrom": "Central Depot Uttara",
+      "warehouseFromId": "wh-001",
+      "warehouseTo": "Dhanmondi Retail Outlet",
+      "warehouseToId": "wh-002",
+      "status": "IN_TRANSIT",
+      "items": [
+        {
+          "productId": "p-001",
+          "code": "SGS24-BLK-256",
+          "name": "Samsung Galaxy S24",
+          "qty": 2,
+          "tp": 82000,
+          "serials": ["356938035643815"]
+        }
+      ],
+      "shippingCost": 350,
+      "totalValue": 164000,
+      "driverName": "Al-Amin (Courier Van 12)",
+      "vehicleNo": "Dhaka Metro GA-11-2024",
+      "note": "Stock transfer for upcoming weekend sale"
+    },
+    {
+      "id": "TPN-1010",
+      "date": "2026-10-06",
+      "warehouseFrom": "Central Depot Uttara",
+      "warehouseFromId": "wh-001",
+      "warehouseTo": "Gulshan Flagship Store",
+      "warehouseToId": "wh-003",
+      "status": "RECEIVED",
+      "items": [
+        {
+          "productId": "p-003",
+          "code": "IP15P-NAT-256",
+          "name": "Apple iPhone 15 Pro",
+          "qty": 1,
+          "tp": 124000,
+          "serials": ["356938099912345"]
+        }
+      ],
+      "shippingCost": 250,
+      "totalValue": 124000,
+      "driverName": "Jalal Hossain",
+      "vehicleNo": "Dhaka Metro GA-44-8899",
+      "note": "VIP order fulfillment transfer. Cleared by BRN-0891"
+    }
+  ],
+  "brnReceipts": [
+    {
+      "id": "BRN-0891",
+      "tpnId": "TPN-1010",
+      "date": "2026-10-06",
+      "destinationBranch": "Gulshan Flagship Store",
+      "destinationBranchId": "wh-003",
+      "verifiedBy": "Sabrina Akhter (Outlet Manager)",
+      "status": "RECEIVED_EXACT",
+      "scannedLines": [
+        {
+          "productId": "p-003",
+          "productName": "Apple iPhone 15 Pro",
+          "expectedQty": 1,
+          "receivedQty": 1,
+          "damagedQty": 0,
+          "verifiedSerials": ["356938099912345"],
+          "discrepancy": false
+        }
+      ],
+      "note": "All serials match physical handsets exactly"
+    },
+    {
+      "id": "BRN-0892",
+      "tpnId": "TPN-1008",
+      "date": "2026-09-28",
+      "destinationBranch": "Dhanmondi Retail Outlet",
+      "destinationBranchId": "wh-002",
+      "verifiedBy": "Tariqul Islam (Branch Manager)",
+      "status": "RECEIVED_WITH_DISCREPANCY",
+      "scannedLines": [
+        {
+          "productId": "p-005",
+          "productName": "Xiaomi Redmi Note 13",
+          "expectedQty": 5,
+          "receivedQty": 4,
+          "damagedQty": 1,
+          "verifiedSerials": ["869876054412201", "869876054412202"],
+          "discrepancy": true
+        }
+      ],
+      "note": "1 unit missing in transit carton; transit loss incident filed"
+    }
+  ],
+  "damageQuarantine": [
+    {
+      "id": "DMG-2001",
+      "productId": "p-002",
+      "sku": "SNY-BRV-55X75K",
+      "name": "Sony Bravia X75K",
+      "serialNumber": "SN75K-004423",
+      "source": "GRN_INBOUND",
+      "originBranchId": "wh-001",
+      "originBranchName": "Central Depot Uttara",
+      "quarantineReason": "Defective Display Panel upon intake",
+      "defectCategory": "MANUFACTURING_DEFECT",
+      "costImpact": 63000,
+      "status": "RTV_PENDING",
+      "createdAt": "2026-10-09"
+    },
+    {
+      "id": "DMG-2002",
+      "productId": "p-005",
+      "sku": "RN13-MG-256",
+      "name": "Xiaomi Redmi Note 13",
+      "serialNumber": "869876054412299",
+      "source": "POS_RETURN",
+      "originBranchId": "wh-002",
+      "originBranchName": "Dhanmondi Retail Outlet",
+      "quarantineReason": "Water ingress reported during customer inspection",
+      "defectCategory": "CUSTOMER_MISUSE",
+      "costImpact": 21500,
+      "status": "WRITTEN_OFF",
+      "createdAt": "2026-10-04"
+    },
+    {
+      "id": "DMG-2003",
+      "productId": "p-004",
+      "sku": "WAL-AC-1.5T",
+      "name": "Walton Inverter AC 1.5T",
+      "serialNumber": "WFA2Q3-11099",
+      "source": "BRN_TRANSIT",
+      "originBranchId": "wh-001",
+      "originBranchName": "Central Depot Uttara",
+      "quarantineReason": "Compressor dent from strapping tension in cargo",
+      "defectCategory": "DAMAGED_IN_TRANSIT",
+      "costImpact": 41000,
+      "status": "IN_QUARANTINE",
+      "createdAt": "2026-09-29"
+    }
+  ],
+  "rtvChallans": [
+    {
+      "id": "RTV-0071",
+      "date": "2026-10-12",
+      "supplierId": "sup-002",
+      "supplierName": "Sony Gallery BD Ltd.",
+      "warehouseId": "wh-001",
+      "warehouseName": "Central Depot Uttara",
+      "status": "DISPATCHED",
+      "totalDebitAmount": 63000,
+      "items": [
+        {
+          "productId": "p-002",
+          "name": "Sony Bravia X75K",
+          "serialNumber": "SN75K-004423",
+          "unitCost": 63000,
+          "reason": "Warranty claim for unbox display vertical line fault"
+        }
+      ],
+      "note": "Dispatched via Sundarban Courier (CN: SC-992110). Awaiting credit note or replacement."
+    },
+    {
+      "id": "RTV-0070",
+      "date": "2026-09-20",
+      "supplierId": "sup-001",
+      "supplierName": "Samsung Bangladesh Distribution Ltd.",
+      "warehouseId": "wh-001",
+      "warehouseName": "Central Depot Uttara",
+      "status": "CREDIT_ISSUED",
+      "totalDebitAmount": 82000,
+      "items": [
+        {
+          "productId": "p-001",
+          "name": "Samsung Galaxy S24",
+          "serialNumber": "356938035643900",
+          "unitCost": 82000,
+          "reason": "Motherboard restart loop"
+        }
+      ],
+      "note": "Credit memo CM-2024-88 applied against invoice PO-1035."
+    }
+  ],
+  "salesInvoices": [
+    {
+      "id": "INV-88231",
+      "date": "2026-10-18",
+      "customerId": "cus-001",
+      "customerName": "Tanvir Ahmed",
+      "channel": "pos",
+      "branchId": "wh-002",
+      "branchName": "Dhanmondi Retail Outlet",
+      "items": [
+        { "productId": "p-005", "name": "Xiaomi Redmi Note 13", "imei": "869876054412204", "qty": 1, "price": 26990, "tp": 21500 }
+      ],
+      "subtotal": 26990,
+      "discount": 0,
+      "total": 26990,
+      "paid": { "cash": 18490, "card": 0, "mfs": 0, "due": 8500 },
+      "status": "partial_due"
+    },
+    {
+      "id": "INV-88230",
+      "date": "2026-10-17",
+      "customerId": "cus-002",
+      "customerName": "Nusrat Jahan",
+      "channel": "pos",
+      "branchId": "wh-002",
+      "branchName": "Dhanmondi Retail Outlet",
+      "items": [
+        { "productId": "p-003", "name": "Apple iPhone 15 Pro", "imei": "356938099912346", "qty": 1, "price": 145000, "tp": 124000 }
+      ],
+      "subtotal": 145000,
+      "discount": 2000,
+      "total": 143000,
+      "paid": { "cash": 0, "card": 143000, "mfs": 0, "due": 0 },
+      "status": "paid"
+    },
+    {
+      "id": "INV-88229",
+      "date": "2026-10-16",
+      "customerId": "cus-003",
+      "customerName": "Walk-in Customer",
+      "channel": "pos",
+      "branchId": "wh-002",
+      "branchName": "Dhanmondi Retail Outlet",
+      "items": [
+        { "productId": "p-001", "name": "Samsung Galaxy S24", "imei": "356938035643811", "qty": 1, "price": 98000, "tp": 82000 }
+      ],
+      "subtotal": 98000,
+      "discount": 0,
+      "total": 98000,
+      "paid": { "cash": 0, "card": 0, "mfs": 98000, "due": 0 },
+      "status": "paid"
+    }
+  ],
+  "salesReturns": [
+    {
+      "id": "SR-2201",
+      "date": "2026-10-15",
+      "invoiceId": "INV-88104",
+      "customerId": "cus-001",
+      "customerName": "Tanvir Ahmed",
+      "productId": "p-002",
+      "productName": "Sony Bravia X75K",
+      "serialNumber": "SN75K-004423",
+      "returnCondition": "DAMAGED",
+      "refundMethod": "CREDIT_NOTE",
+      "refundAmount": 79500,
+      "reason": "Vertical colored lines on display after 3 days of usage",
+      "status": "sent_to_damage"
+    },
+    {
+      "id": "SR-2202",
+      "date": "2026-10-11",
+      "invoiceId": "INV-88090",
+      "customerId": "cus-002",
+      "customerName": "Nusrat Jahan",
+      "productId": "p-005",
+      "productName": "Xiaomi Redmi Note 13",
+      "serialNumber": "869876054412210",
+      "returnCondition": "RESTOCKABLE",
+      "refundMethod": "CASH",
+      "refundAmount": 26990,
+      "reason": "Unopened box, customer opted for 15 Pro instead",
+      "status": "restocked_to_inventory"
+    }
+  ],
+  "dueBills": [
+    {
+      "customerId": "cus-001",
+      "customerName": "Tanvir Ahmed",
+      "phone": "+8801712345678",
+      "creditLimit": 50000,
+      "totalDue": 8500,
+      "invoices": [
+        { "invoiceId": "INV-88231", "date": "2026-10-18", "total": 26990, "paid": 18490, "due": 8500 }
+      ]
+    },
+    {
+      "customerId": "cus-004",
+      "customerName": "TechCorp Solutions (Corporate)",
+      "phone": "+8801755112233",
+      "creditLimit": 200000,
+      "totalDue": 33000,
+      "invoices": [
+        { "invoiceId": "INV-88190", "date": "2026-10-01", "total": 125000, "paid": 92000, "due": 33000 }
+      ]
+    }
+  ],
+  "promotions": [
+    {
+      "id": "PRM-101",
+      "title": "BOGO Flash Offer: Buy S24, Get Earbuds Free",
+      "type": "BOGO",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-31",
+      "conditions": {
+        "buyProductId": "p-001",
+        "buyQty": 1,
+        "getProductId": "p-005",
+        "getQty": 1,
+        "discountPercent": 100
+      },
+      "isActive": true
+    },
+    {
+      "id": "PRM-102",
+      "title": "Weekend Flat 5% Off Electronics",
+      "type": "INVOICE_DISCOUNT",
+      "startDate": "2026-10-15",
+      "endDate": "2026-10-25",
+      "conditions": {
+        "minimumInvoiceAmount": 50000,
+        "discountPercent": 5
+      },
+      "isActive": true
+    }
+  ],
+  "coupons": [
+    { "code": "FESTIVE500", "discountAmount": 500, "minPurchase": 10000, "maxUses": 100, "usedCount": 24, "isActive": true },
+    { "code": "TECHCORP10", "discountAmount": 2000, "minPurchase": 50000, "maxUses": 50, "usedCount": 8, "isActive": true }
+  ],
+  "loyaltySettings": {
+    "earningRate": 1,
+    "redemptionRate": 100,
+    "minRedemptionThreshold": 100,
+    "maxInvoiceRedemptionPercentage": 30
+  },
+  "registers": {
+    "shiftId": "SHIFT-9941",
+    "status": "OPEN",
+    "openedAt": "2026-10-18T09:00:00Z",
+    "openingFloat": 5000,
+    "denominations": {
+      "1000": 3,
+      "500": 3,
+      "100": 5
+    },
+    "pettyCashLogs": [
+      { "id": "PC-01", "amount": 250, "reason": "Staff morning tea & snacks", "type": "OUT", "timestamp": "2026-10-18T10:15:00Z" }
+    ]
+  }
+}

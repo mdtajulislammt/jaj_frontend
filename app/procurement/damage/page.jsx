@@ -11,13 +11,21 @@ import {
   X,
   AlertOctagon,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import PageHeader from "@/components/PageHeader";
 import Badge from "@/components/Badge";
+import CursorPagination from "@/components/CursorPagination";
 import { money } from "@/lib/format";
+import mockData from "@/data/mockData.json";
 
 export default function DamagePage() {
+  const router = useRouter();
   const products = useSelector((s) => s.products.items);
   const [activeTab, setActiveTab] = useState("create"); // "create" | "history"
+  const [quarantineList, setQuarantineList] = useState(mockData.damageQuarantine || []);
+  const [selectedForRtv, setSelectedForRtv] = useState([]);
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyPageSize, setHistoryPageSize] = useState(10);
 
   // Form states matching Screenshot 4
   const [selectedWarehouse, setSelectedWarehouse] = useState("");
@@ -329,9 +337,93 @@ export default function DamagePage() {
           </div>
         </form>
       ) : (
-        /* History View */
-        <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/90 shadow-sm overflow-hidden p-6 text-center text-slate-500">
-          <p className="font-semibold">Recent damage and defective item logs.</p>
+        /* History / Quarantine Master Ledger */
+        <div className="space-y-4">
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/90 shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+              <div className="text-[13px] font-bold text-slate-800">
+                Quarantine Master Ledger ({quarantineList.length} items)
+              </div>
+              {selectedForRtv.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => router.push("/returns")}
+                  className="px-4 py-1.5 bg-[#64BD0B] hover:bg-[#529E08] text-white font-bold text-[12px] rounded-xl shadow-md transition-all flex items-center gap-1.5"
+                >
+                  Batch {selectedForRtv.length} items to RTV Manifest ➔
+                </button>
+              )}
+            </div>
+
+            <table className="w-full text-[13px]">
+              <thead>
+                <tr className="text-left text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/70 border-b border-slate-100">
+                  <th className="px-4 py-3.5 text-center">Select</th>
+                  <th className="px-6 py-3.5 font-semibold">Damage ID</th>
+                  <th className="px-6 py-3.5 font-semibold">Product Name</th>
+                  <th className="px-6 py-3.5 font-semibold">Serial / IMEI</th>
+                  <th className="px-6 py-3.5 font-semibold">Loss Source</th>
+                  <th className="px-6 py-3.5 font-semibold text-right">Loss Value (৳)</th>
+                  <th className="px-6 py-3.5 font-semibold">Quarantine Reason</th>
+                  <th className="px-6 py-3.5 font-semibold text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {quarantineList
+                  .slice((historyPage - 1) * historyPageSize, historyPage * historyPageSize)
+                  .map((item) => (
+                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-4 text-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedForRtv.includes(item.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedForRtv([...selectedForRtv, item.id]);
+                          } else {
+                            setSelectedForRtv(selectedForRtv.filter((id) => id !== item.id));
+                          }
+                        }}
+                        className="accent-[#64BD0B] rounded cursor-pointer"
+                      />
+                    </td>
+                    <td className="px-6 py-4 font-mono font-bold text-rose-600">{item.id}</td>
+                    <td className="px-6 py-4 font-bold text-slate-900">{item.name}</td>
+                    <td className="px-6 py-4 font-mono text-[12px] text-slate-600">
+                      {item.serialNumber || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 font-medium text-[12px] text-slate-700">
+                      <span className="px-2 py-0.5 bg-slate-100 rounded text-slate-700 font-mono text-[11px]">
+                        {item.source}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right font-mono font-bold text-rose-600">
+                      {money(item.costImpact)}
+                    </td>
+                    <td className="px-6 py-4 text-[12px] text-slate-600">
+                      {item.quarantineReason}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <Badge tone={item.status === "RTV_PENDING" ? "warning" : "bad"} dot>
+                        {item.status}
+                      </Badge>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Cursor Pagination for Damage Ledger */}
+            <div className="p-3 bg-white border-t border-slate-100">
+              <CursorPagination
+                totalItems={quarantineList.length}
+                pageSize={historyPageSize}
+                onPageSizeChange={setHistoryPageSize}
+                currentPage={historyPage}
+                onPageChange={setHistoryPage}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

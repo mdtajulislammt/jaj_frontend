@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Badge from "@/components/Badge";
+import CursorPagination from "@/components/CursorPagination";
 import { createPO } from "@/store/slices/purchaseOrdersSlice";
 import { money } from "@/lib/format";
 
@@ -26,6 +27,8 @@ export default function PurchaseOrdersPage() {
   const existingPOs = useSelector((s) => s.purchaseOrders.items);
 
   const [activeTab, setActiveTab] = useState("create"); // "create" | "history"
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyPageSize, setHistoryPageSize] = useState(10);
 
   // Form states matching Screenshot 5
   const [selectedWarehouse, setSelectedWarehouse] = useState(
@@ -493,7 +496,9 @@ export default function PurchaseOrdersPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {existingPOs.map((p) => (
+              {existingPOs
+                .slice((historyPage - 1) * historyPageSize, historyPage * historyPageSize)
+                .map((p) => (
                 <tr key={p.id} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4 font-mono font-bold text-[#3B7506]">{p.id}</td>
                   <td className="px-6 py-4 font-bold text-slate-900">{p.supplierName}</td>
@@ -511,6 +516,17 @@ export default function PurchaseOrdersPage() {
               ))}
             </tbody>
           </table>
+
+          {/* Cursor Pagination for PO History */}
+          <div className="p-3 bg-white border-t border-slate-100">
+            <CursorPagination
+              totalItems={existingPOs.length}
+              pageSize={historyPageSize}
+              onPageSizeChange={setHistoryPageSize}
+              currentPage={historyPage}
+              onPageChange={setHistoryPage}
+            />
+          </div>
         </div>
       )}
     </div>

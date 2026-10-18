@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Badge from "@/components/Badge";
+import CursorPagination from "@/components/CursorPagination";
 import { money } from "@/lib/format";
 import { createGRN } from "@/store/slices/purchaseOrdersSlice";
 
@@ -25,6 +26,8 @@ export default function GRNPage() {
   const existingGRNs = useSelector((s) => s.purchaseOrders.grns || []);
 
   const [activeTab, setActiveTab] = useState("create"); // "create" | "history"
+  const [grnPage, setGrnPage] = useState(1);
+  const [grnPageSize, setGrnPageSize] = useState(10);
 
   // Options matching Screenshot 1: Purchase Order No | TPN No | Without Po
   const [grnSourceType, setGrnSourceType] = useState("without_po");
@@ -471,7 +474,9 @@ export default function GRNPage() {
                   </td>
                 </tr>
               ) : (
-                existingGRNs.map((g, i) => (
+                existingGRNs
+                  .slice((grnPage - 1) * grnPageSize, grnPage * grnPageSize)
+                  .map((g, i) => (
                   <tr key={i} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4 font-mono font-bold text-[#3B7506]">{g.poId}</td>
                     <td className="px-6 py-4 text-slate-600 font-mono text-[12px]">{g.voucherDate || "2026-10-15"}</td>
@@ -487,6 +492,17 @@ export default function GRNPage() {
               )}
             </tbody>
           </table>
+
+          {/* Cursor Pagination for GRN History */}
+          <div className="p-3 bg-white border-t border-slate-100">
+            <CursorPagination
+              totalItems={existingGRNs.length}
+              pageSize={grnPageSize}
+              onPageSizeChange={setGrnPageSize}
+              currentPage={grnPage}
+              onPageChange={setGrnPage}
+            />
+          </div>
         </div>
       )}
     </div>

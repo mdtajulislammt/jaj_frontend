@@ -1,47 +1,10 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
+import mockData from "@/data/mockData.json";
+
 const initialState = {
-  items: [
-    {
-      id: "PO-1042",
-      supplierId: "sup-001",
-      supplierName: "Samsung Bangladesh Distribution Ltd.",
-      date: "2026-08-10",
-      status: "grn_pending", // draft | approved | grn_pending | received | closed
-      lines: [
-        { productId: "p-001", productName: "Samsung Galaxy S24", qty: 50, unitCost: 82000 },
-      ],
-    },
-    {
-      id: "PO-1041",
-      supplierId: "sup-002",
-      supplierName: "Sony Gallery BD",
-      date: "2026-08-08",
-      status: "received",
-      lines: [
-        { productId: "p-002", productName: "Sony Bravia X75K", qty: 20, unitCost: 63000 },
-      ],
-    },
-    {
-      id: "PO-1040",
-      supplierId: "sup-003",
-      supplierName: "Walton Hi-Tech Industries",
-      date: "2026-08-02",
-      status: "closed",
-      lines: [
-        { productId: "p-004", productName: "Walton WFA-2Q3", qty: 30, unitCost: 41000 },
-      ],
-    },
-  ],
-  grns: [
-    {
-      id: "GRN-0311",
-      poId: "PO-1041",
-      date: "2026-08-09",
-      receivedBy: "Golam Rabbani (Storekeeper)",
-      lines: [{ productId: "p-002", productName: "Sony Bravia X75K", qty: 20, serialsAdded: 20 }],
-    },
-  ],
+  items: mockData.purchaseOrders || [],
+  grns: mockData.grnNotes || [],
 };
 
 const purchaseOrdersSlice = createSlice({

@@ -14,11 +14,16 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Badge from "@/components/Badge";
+import CursorPagination from "@/components/CursorPagination";
 import { money } from "@/lib/format";
+import mockData from "@/data/mockData.json";
 
 export default function TpnPage() {
   const products = useSelector((s) => s.products.items);
   const [activeTab, setActiveTab] = useState("create"); // "create" | "history"
+  const [tpnHistory, setTpnHistory] = useState(mockData.tpnManifests || []);
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyPageSize, setHistoryPageSize] = useState(10);
 
   // Form states matching Screenshot 3
   const [warehouseFrom, setWarehouseFrom] = useState(
@@ -347,8 +352,54 @@ export default function TpnPage() {
         </form>
       ) : (
         /* History View */
-        <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/90 shadow-sm overflow-hidden p-6 text-center text-slate-500">
-          <p className="font-semibold">Recent TPN shipments logged. All deliveries synced.</p>
+        <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/90 shadow-sm overflow-hidden">
+          <table className="w-full text-[13px]">
+            <thead>
+              <tr className="text-left text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/70 border-b border-slate-100">
+                <th className="px-6 py-3.5 font-semibold">TPN Number</th>
+                <th className="px-6 py-3.5 font-semibold">Date</th>
+                <th className="px-6 py-3.5 font-semibold">Origin Warehouse</th>
+                <th className="px-6 py-3.5 font-semibold">Destination Branch</th>
+                <th className="px-6 py-3.5 font-semibold text-center">Items Qty</th>
+                <th className="px-6 py-3.5 font-semibold text-right">Valuation (৳)</th>
+                <th className="px-6 py-3.5 font-semibold text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {tpnHistory
+                .slice((historyPage - 1) * historyPageSize, historyPage * historyPageSize)
+                .map((m) => (
+                <tr key={m.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-6 py-4 font-mono font-bold text-[#3B7506]">{m.id}</td>
+                  <td className="px-6 py-4 text-slate-600 font-mono text-[12px]">{m.date}</td>
+                  <td className="px-6 py-4 text-slate-800 font-medium">{m.warehouseFrom}</td>
+                  <td className="px-6 py-4 text-slate-800 font-medium">{m.warehouseTo}</td>
+                  <td className="px-6 py-4 text-center font-bold text-slate-900">
+                    {m.items?.reduce((s, i) => s + i.qty, 0) || 1} pcs
+                  </td>
+                  <td className="px-6 py-4 text-right font-mono font-bold text-slate-900">
+                    {money(m.totalValue)}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <Badge tone={m.status === "RECEIVED" ? "good" : "warning"} dot>
+                      {m.status}
+                    </Badge>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Cursor Pagination for TPN History */}
+          <div className="p-3 bg-white border-t border-slate-100">
+            <CursorPagination
+              totalItems={tpnHistory.length}
+              pageSize={historyPageSize}
+              onPageSizeChange={setHistoryPageSize}
+              currentPage={historyPage}
+              onPageChange={setHistoryPage}
+            />
+          </div>
         </div>
       )}
     </div>

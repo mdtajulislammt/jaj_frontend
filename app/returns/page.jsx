@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Badge from "@/components/Badge";
+import CursorPagination from "@/components/CursorPagination";
 import { money } from "@/lib/format";
 import { addRTV } from "@/store/slices/returnsSlice";
 
@@ -23,6 +24,8 @@ export default function ReturnsPage() {
   const rtvChallans = useSelector((s) => s.returns.rtvChallans || []);
 
   const [activeTab, setActiveTab] = useState("create"); // "create" | "history"
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyPageSize, setHistoryPageSize] = useState(10);
 
   // Form states matching Screenshot 2
   const [selectedWarehouse, setSelectedWarehouse] = useState("");
@@ -410,7 +413,9 @@ export default function ReturnsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {rtvChallans.map((r, i) => (
+              {rtvChallans
+                .slice((historyPage - 1) * historyPageSize, historyPage * historyPageSize)
+                .map((r, i) => (
                 <tr key={i} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4 font-mono font-bold text-rose-600">RTV-10{i + 1}</td>
                   <td className="px-6 py-4 font-bold text-slate-900">{r.supplierName}</td>
@@ -428,6 +433,17 @@ export default function ReturnsPage() {
               ))}
             </tbody>
           </table>
+
+          {/* Cursor Pagination for RTV History */}
+          <div className="p-3 bg-white border-t border-slate-100">
+            <CursorPagination
+              totalItems={rtvChallans.length}
+              pageSize={historyPageSize}
+              onPageSizeChange={setHistoryPageSize}
+              currentPage={historyPage}
+              onPageChange={setHistoryPage}
+            />
+          </div>
         </div>
       )}
     </div>

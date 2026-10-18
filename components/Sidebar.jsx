@@ -114,9 +114,11 @@ const NAV_ITEMS = [
     submodules: [
       { href: "/purchase-orders", label: "PO", icon: ClipboardList },
       { href: "/grn", label: "GRN", icon: PackageCheck },
+      { href: "/procurement/tpn", label: "TPN", icon: ArrowRightLeft },
+      { href: "/procurement/brn", label: "BRN (Branch Inbound)", icon: PackageCheck },
       { href: "/returns", label: "RTV", icon: Undo2 },
       { href: "/suppliers", label: "Suppliers", icon: Truck },
-      { href: "/damage", label: "Damage", icon: ShieldAlert },
+      { href: "/procurement/damage", label: "Damage", icon: ShieldAlert },
     ],
   },
   {
@@ -137,6 +139,7 @@ const NAV_ITEMS = [
     label: "Promotions & Offers",
     icon: BadgePercent,
     submodules: [
+      { href: "/promotions", label: "Promotions Hub & Rules", icon: BadgePercent },
       { href: "/promotions/coupons", label: "Coupons & Promo Codes", icon: Tag },
       { href: "/promotions/campaigns", label: "Discount Campaigns (Flat, %)", icon: Megaphone },
       { href: "/promotions/bundles", label: "Combo & Bundle Offers (BOGO)", icon: Layers2 },

@@ -1,28 +1,10 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
+import mockData from "@/data/mockData.json";
+
 const initialState = {
-  salesReturns: [
-    {
-      id: "SR-2201",
-      date: "2026-08-15",
-      invoiceId: "INV-88104",
-      productName: "Sony Bravia X75K",
-      imei: "SN75K-004423",
-      reason: "Display fault after 3 days",
-      action: "replace", // replace | refund
-      status: "sent_to_damage",
-    },
-  ],
-  rtvChallans: [
-    {
-      id: "RTV-0071",
-      date: "2026-08-16",
-      supplierId: "sup-002",
-      supplierName: "Sony Gallery BD",
-      items: [{ productName: "Sony Bravia X75K", imei: "SN75K-004423", reason: "Display fault" }],
-      status: "sent",
-    },
-  ],
+  salesReturns: mockData.salesReturns || [],
+  rtvChallans: mockData.rtvChallans || [],
 };
 
 const returnsSlice = createSlice({

@@ -487,7 +487,7 @@ export default function PosPage() {
         position: "fixed",
         inset: 0,
         zIndex: 100,
-        background: "#f0f5fa",
+        background: "transparent",
         display: "flex",
         flexDirection: "column",
         fontFamily: "'Inter', sans-serif",
